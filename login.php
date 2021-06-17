@@ -19,8 +19,8 @@
 
     <main style="padding: 0px 10px;">
         <header class="d-flex space-between middle-align">
-           <a href="index.html">
-            <img src="images/logo.png" height="50px" width="170px" alt="site logo main" style="margin: auto;"></img>
+           <a href="index.php">
+            <img src="images/42.png" height="50px" width="170px" alt="site logo main" style="margin: auto;"></img>
         </a> 
         </header>
         <section id="login-form-section">
@@ -41,7 +41,7 @@
                             Sign In
                         </button>
                         <p class="signUpText para">
-                            New to Redaflix? <span class="signUp"><a href="register.html">Sign up Now</a></span>
+                            New to Redaflix? <span class="signUp"><a href="register.php">Sign up Now</a></span>
                         </p>
                     </form>
                 </div>
@@ -95,6 +95,7 @@ if(isset($_POST['login'])){
 				$_SESSION['user'] = $row['username'];
 				$_SESSION['user_pass'] = $row['user_pass'];
 				$_SESSION['phone'] = $row['phone'];
+                $_SESSION['user_id'] = $row['id'];
 				header('Location: user_dashboard/browse.php');
 				exit;
 			}

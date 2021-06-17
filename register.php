@@ -19,10 +19,10 @@
     </style>
     <main style="padding: 0px 10px;">
         <header class="d-flex space-between middle-align">
-            <a href="index.html">
-                <img src="images/logo.png" height="50px" width="170px" alt="site logo main"></img>
+            <a href="index.php">
+                <img src="images/42.png" height="50px" width="170px" alt="site logo main"></img>
             </a> 
-            <button class="button"><a href="login.html"> Sign In</a></button>
+            <button class="button"><a href="login.php"> Sign In</a></button>
         </header>
         <section id="login-form-section">
             <!--Login form start-->
@@ -43,7 +43,7 @@
                             Register
                         </button>
                         <p class="signUpText para">
-                            Have an account? <span class="signUp"><a href="login.html">Sign In</a></span>
+                            Have an account? <span class="signUp"><a href="login.php">Sign In</a></span>
                         </p>
                     </form>
                 </div>
@@ -83,7 +83,6 @@ $conn = mysqli_connect($server, $username, $password, $database);
 if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
-echo "Connected successfully";
 
 
 if(isset($_POST['submit'])){
