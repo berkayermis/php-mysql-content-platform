@@ -1,0 +1,212 @@
+<?php
+session_start();
+?>
+
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin Panel</title>
+    <meta name="description" content="Series-Movies Suggestion System" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <link rel="stylesheet" href="../assets/css/landing-pages.css">
+</head>
+
+<body>
+    <style>
+        body::before{
+            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0.9) 100%),url('../images/admin.jpg');
+        }
+    </style>
+
+    <main style="padding: 0px 10px;">
+        <header class="d-flex space-between middle-align">
+           <a href="index.html">
+            <img src="../images/logo.png" height="50px" width="170px" alt="site logo main" style="margin: auto;"></img>
+        </a> 
+        </header>
+        <section id="login-form-section">
+            <!--Login form start-->
+
+                <div class="loginContainer d-flex direction-column">
+                    <h2 class="formtitle">
+                    Content Panel
+                    </h2>
+                    <form action="dashboard.php" id="loginForm" class="d-flex direction-column" method="post" name="loginForm">
+                        <input type="text" name="contentName" id="contentName" class="contentName" placeholder="Content Name" required/>
+                        <p id="errorContent">Please enter a valid content name</p>
+                        <input type="number" name="contentAge" id="contentAge" class="contentAge" placeholder="Content Age Limit" required/>
+                        <input type="number" name="contentDate" id="contentDate" class="contentDate" placeholder="Release Year"  required/>
+                        <input type="text" name="contentSource" id="contentSource" class="contentSource" placeholder="Content Source" required/>
+                        <span style="margin-top:15px; font-size:15px;">Season Information</span>
+                        <input style="margin-top:10px;" type="radio" id="seasonal" name="radio" <?php if (isset($radio) && $radio=="seasonal") echo "checked";?> value="seasonal">
+                        <label style="margin-top:-20px; margin-left:25px" for="Seasonal">Seasonal</label><br>
+                        <input style="margin-top:-10px;" type="radio" id="notSeasonal" name="radio" <?php if (isset($radio) && $radio=="no seasonal") echo "checked";?> value="notSeasonal">
+                        <label style="margin-top:-20px; margin-left:25px" for="Not seasonal">Not seasonal</label><br>
+
+                        <span style="margin-top:15px; font-size:15px;">Content Type</span>
+                        <input style="margin-top:10px;" type="radio" id="Movie" name="contentType" <?php if (isset($radio) && $radio=="movie") echo "checked";?> value="movie">
+                        <label style="margin-top:-20px; margin-left:25px" for="Movie">Movie</label><br>
+                        <input style="margin-top:-10px;" type="radio" id="Serie" name="contentType" <?php if (isset($radio) && $radio=="serie") echo "checked";?> value="serie">
+                        <label style="margin-top:-20px; margin-left:25px" for="Serie">Serie</label><br>
+                        <input style="margin-top:-10px;" type="radio" id="Documentary" name="contentType" <?php if (isset($radio) && $radio=="documentary") echo "checked";?> value="documentary">
+                        <label style="margin-top:-20px; margin-left:25px" for="Documentary">Documentary</label><br>
+
+                        <button type="submit" name="create" class="button submitButton" id="signInButton">
+                            Create
+                        </button>
+                    </form>
+                </div>
+
+            <!--Login form End-->
+        </section>
+    </main>
+
+    <script>
+        //function to validate email address on input text change and enable submit button if it's true
+        document.getElementById('errorContent').style.display = "none";
+        function validateEmail() {
+            let email = document.getElementById('contentName').value;
+            let re = /\S+@\S+\.\S+/;
+            let result = re.test(email);
+            if (result) {
+                document.getElementById('errorContent').style.display = "none";
+                document.getElementById('signInButton').disabled = false;
+               // document.getElementById("email-form").submit();
+            }
+            else {
+                document.getElementById('errorContent').style.display = "block";
+                document.getElementById('signInButton').disabled = true;
+            }
+        }
+    </script>
+
+    <?php
+    require_once('../config.php');
+
+    // Create connection
+    $conn = mysqli_connect($server, $username, $password,$database);
+    
+    // Check connection
+    if (!$conn) {
+      die("Connection failed: " . mysqli_connect_error());
+    }
+
+        if(isset($_POST['create'])){
+            $contentName = $_POST['contentName'];
+            $contentAge = $_POST['contentAge'];
+            $contentDate = $_POST['contentDate'];
+            $contentSource = $_POST['contentSource'];
+            $seasonInfo = test_input($_POST['radio']);
+            $contentType = test_input($_POST['contentType']);
+
+            if($seasonInfo == 'notSeasonal'){
+                if($contentType == 'movie' || $contentType == 'documentary'){
+                    $query = "INSERT INTO content (content_name,age_limit,content_date,source) VALUES (?,?,?,?)";
+                    $statement = mysqli_prepare($conn,$query);
+                    mysqli_stmt_bind_param($statement,'siis',$contentName,$contentAge,$contentDate,$contentSource);
+                    mysqli_stmt_execute($statement);
+                    print(mysqli_stmt_error($statement) . "\n");
+                    mysqli_stmt_close($statement);
+
+                    $sql_search = 'SELECT * FROM content';
+                    $result = mysqli_query($conn,$sql_search);
+                    if(mysqli_num_rows($result)>0){
+                        while($row = mysqli_fetch_assoc($result)){
+                            if($row['content_name'] == $contentName && $row['source'] == $contentSource){
+                                $_SESSION['content_id'] = $row['id'];
+                                $_SESSION['content_duration'] = durationFetch($contentSource);
+                            }
+                        }
+                    }
+
+                    $sql = "INSERT INTO no_season_content (content_id,duration) VALUES (?,?)";
+                    $statement = mysqli_prepare($conn,$sql);
+                    mysqli_stmt_bind_param($statement,'is',$_SESSION['content_id'],$_SESSION['content_duration']);
+                    mysqli_stmt_execute($statement);
+                    print(mysqli_stmt_error($statement) . "\n");
+                    mysqli_stmt_close($statement);
+
+                    if($contentType == 'movie'){
+                        $sql_search = 'SELECT no_season_content.id AS nsid, no_season_content.content_id,content.id FROM no_season_content,content';
+                        $result = mysqli_query($conn,$sql_search);
+                        if(mysqli_num_rows($result)>0){
+                            while($row = mysqli_fetch_assoc($result)){
+                                if($row['content_id'] == $row['id']){
+                                    $_SESSION['no_season_id'] = $row['nsid'];
+                                }
+                            }
+                        }
+
+                        $sql2 = "INSERT INTO movie (content_id,no_season_id) VALUES (?,?)";
+                        $statement = mysqli_prepare($conn,$sql2);
+                        mysqli_stmt_bind_param($statement,'ii',$_SESSION['content_id'],$_SESSION['no_season_id']);
+                        mysqli_stmt_execute($statement);
+                        print(mysqli_stmt_error($statement) . "\n");
+                        mysqli_stmt_close($statement);
+                    }
+                    else if($contentType == 'documentary'){
+                        $sql_search3 = 'SELECT no_season_content.id AS nsid, no_season_content.content_id,content.id FROM no_season_content,content';
+                        $result = mysqli_query($conn,$sql_search3);
+                        if(mysqli_num_rows($result)>0){
+                            while($row = mysqli_fetch_assoc($result)){
+                                if($row['content_id'] == $row['id']){
+                                    $_SESSION['no_season_id'] = $row['nsid'];
+                                }
+                            }
+                        }
+
+                        $sql2 = "INSERT INTO documentary (content_id,season_id,episode_id,no_season_id) VALUES (?,?,?,?)";
+                        $statement = mysqli_prepare($conn,$sql2);
+                        mysqli_stmt_bind_param($statement,'iiii',$_SESSION['content_id'],NULL,NULL,$_SESSION['no_season_id']);
+                        mysqli_stmt_execute($statement);
+                        print(mysqli_stmt_error($statement) . "\n");
+                        mysqli_stmt_close($statement);
+                    }
+                }
+                else{
+                    $message = "No seasonal content cannot be a serie.";
+                    echo "<script type='text/javascript'>alert('$message');</script>"; 
+                }
+            }
+
+
+        }
+
+        function test_input($data) {
+            $data = trim($data);
+            $data = stripslashes($data);
+            $data = htmlspecialchars($data);
+            return $data;
+          }
+
+        function durationFetch($source){
+        $dur = file_get_contents("https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails&id=$source&key=AIzaSyBgr57WJ8YlgtH4jVFpMsJNVTr2iR8b3cE");
+
+        $duration = json_decode($dur, true);
+        foreach ($duration['items'] as $vidTime) {
+            $vTime= $vidTime['contentDetails']['duration'];
+        }
+        $vrb ='';
+        echo $vTime . "<br>";
+        for($i=2; $i<strlen($vTime); $i++){
+            if($vTime[$i] == 'M'){
+                $vrb .= ' mn.';
+                $i = strlen($vTime);
+            }
+            else if($vTime[$i] == 'H'){
+                $vrb .= ' hr. ';
+            }
+            else{
+                $vrb .= $vTime[$i];
+            }
+        }
+        return $vrb;
+        }
+    ?>
+
+
+</body>
+</html>
