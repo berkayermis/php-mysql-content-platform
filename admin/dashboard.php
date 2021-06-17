@@ -147,20 +147,21 @@ session_start();
                         print(mysqli_stmt_error($statement) . "\n");
                         mysqli_stmt_close($statement);
                     }
+
                     else if($contentType == 'documentary'){
-                        $sql_search3 = 'SELECT no_season_content.id AS nsid, no_season_content.content_id,content.id FROM no_season_content,content';
-                        $result = mysqli_query($conn,$sql_search3);
-                        if(mysqli_num_rows($result)>0){
-                            while($row = mysqli_fetch_assoc($result)){
+                        $sql_search3 = 'SELECT no_season_content.id AS nsid, no_season_content.content_id,content.id FROM no_season_content,content WHERE content_id=content.id AND no_season_content.content_id= "'.$_SESSION['content_id'].'"';
+                        $result3 = mysqli_query($conn,$sql_search3);
+                        if(mysqli_num_rows($result3)>0){
+                            while($row = mysqli_fetch_assoc($result3)){
                                 if($row['content_id'] == $row['id']){
-                                    $_SESSION['no_season_id'] = $row['nsid'];
+                                    $_SESSION['no_session_id'] = $row['nsid'];
                                 }
                             }
                         }
-
-                        $sql2 = "INSERT INTO documentary (content_id,season_id,episode_id,no_season_id) VALUES (?,?,?,?)";
-                        $statement = mysqli_prepare($conn,$sql2);
-                        mysqli_stmt_bind_param($statement,'iiii',$_SESSION['content_id'],NULL,NULL,$_SESSION['no_season_id']);
+                        $null = NULL;
+                        $sql3 = "INSERT INTO documentary (content_id,season_id,episode_id,no_season_id) VALUES (?,?,?,?)";
+                        $statement = mysqli_prepare($conn,$sql3);
+                        mysqli_stmt_bind_param($statement,'iiii',$_SESSION['content_id'],$null,$null,$_SESSION['no_session_id']);
                         mysqli_stmt_execute($statement);
                         print(mysqli_stmt_error($statement) . "\n");
                         mysqli_stmt_close($statement);
@@ -171,7 +172,99 @@ session_start();
                     echo "<script type='text/javascript'>alert('$message');</script>"; 
                 }
             }
+            else if($seasonInfo == 'seasonal'){
+                if($contentType == 'movie'){
+                    $message = "Seasonal content cannot be a movie.";
+                    echo "<script type='text/javascript'>alert('$message');</script>"; 
+                }
+                else if($contentType == 'serie'){
+                    $query = "INSERT INTO content (content_name,age_limit,content_date,source) VALUES (?,?,?,?)";
+                    $statement = mysqli_prepare($conn,$query);
+                    mysqli_stmt_bind_param($statement,'siis',$contentName,$contentAge,$contentDate,$contentSource);
+                    mysqli_stmt_execute($statement);
+                    print(mysqli_stmt_error($statement) . "\n");
+                    mysqli_stmt_close($statement);
 
+                    $sql_search = 'SELECT * FROM content';
+                    $result = mysqli_query($conn,$sql_search);
+                    if(mysqli_num_rows($result)>0){
+                        while($row = mysqli_fetch_assoc($result)){
+                            if($row['content_name'] == $contentName && $row['source'] == $contentSource){
+                                $_SESSION['content_id'] = $row['id'];
+                            }
+                        }
+                    }
+                    $seasonNo = 1;
+                    $sql = "INSERT INTO seasonal_content (content_id,season_no) VALUES (?,?)";
+                    $statement = mysqli_prepare($conn,$sql);
+                    mysqli_stmt_bind_param($statement,'ii',$_SESSION['content_id'],$seasonNo);
+                    mysqli_stmt_execute($statement);
+                    print(mysqli_stmt_error($statement) . "\n");
+                    mysqli_stmt_close($statement);
+
+                    $sql_search = 'SELECT seasonal_content.id AS nsid, seasonal_content.content_id,content.id FROM seasonal_content,content WHERE content_id=content.id AND seasonal_content.content_id= "'.$_SESSION['content_id'].'"';
+                    $result = mysqli_query($conn,$sql_search);
+                    if(mysqli_num_rows($result)>0){
+                        while($row = mysqli_fetch_assoc($result)){
+                            if($row['content_id'] == $row['id']){
+                                $_SESSION['seasonal_id'] = $row['nsid'];
+                            }
+                        }
+                    }
+                    $null = NULL;
+                    $sql2 = "INSERT INTO serie (content_id,season_id,episode_id) VALUES (?,?,?)";
+                    $statement = mysqli_prepare($conn,$sql2);
+                    mysqli_stmt_bind_param($statement,'iii',$_SESSION['content_id'],$_SESSION['seasonal_id'],$null);
+                    mysqli_stmt_execute($statement);
+                    print(mysqli_stmt_error($statement) . "\n");
+                    mysqli_stmt_close($statement);
+                }
+
+                // #########################################################################
+
+                else if($contentType == 'documentary'){
+                    $query = "INSERT INTO content (content_name,age_limit,content_date,source) VALUES (?,?,?,?)";
+                    $statement = mysqli_prepare($conn,$query);
+                    mysqli_stmt_bind_param($statement,'siis',$contentName,$contentAge,$contentDate,$contentSource);
+                    mysqli_stmt_execute($statement);
+                    print(mysqli_stmt_error($statement) . "\n");
+                    mysqli_stmt_close($statement);
+
+                    $sql_search = 'SELECT * FROM content';
+                    $result = mysqli_query($conn,$sql_search);
+                    if(mysqli_num_rows($result)>0){
+                        while($row = mysqli_fetch_assoc($result)){
+                            if($row['content_name'] == $contentName && $row['source'] == $contentSource){
+                                $_SESSION['content_id'] = $row['id'];
+                            }
+                        }
+                    }
+                    $seasonNo = 1;
+                    $sql = "INSERT INTO seasonal_content (content_id,season_no) VALUES (?,?)";
+                    $statement = mysqli_prepare($conn,$sql);
+                    mysqli_stmt_bind_param($statement,'ii',$_SESSION['content_id'],$seasonNo);
+                    mysqli_stmt_execute($statement);
+                    print(mysqli_stmt_error($statement) . "\n");
+                    mysqli_stmt_close($statement);
+
+                    $sql_search = 'SELECT seasonal_content.id AS nsid, seasonal_content.content_id,content.id FROM seasonal_content,content WHERE content_id=content.id AND seasonal_content.content_id= "'.$_SESSION['content_id'].'"';
+                    $result = mysqli_query($conn,$sql_search);
+                    if(mysqli_num_rows($result)>0){
+                        while($row = mysqli_fetch_assoc($result)){
+                            if($row['content_id'] == $row['id']){
+                                $_SESSION['seasonal_id'] = $row['nsid'];
+                            }
+                        }
+                    }
+                    $null = NULL;
+                    $sql2 = "INSERT INTO documentary (content_id,season_id,episode_id,no_season_id) VALUES (?,?,?,?)";
+                    $statement = mysqli_prepare($conn,$sql2);
+                    mysqli_stmt_bind_param($statement,'iiii',$_SESSION['content_id'],$_SESSION['seasonal_id'],$null,$null);
+                    mysqli_stmt_execute($statement);
+                    print(mysqli_stmt_error($statement) . "\n");
+                    mysqli_stmt_close($statement);
+                }
+            }
 
         }
 
@@ -190,7 +283,6 @@ session_start();
             $vTime= $vidTime['contentDetails']['duration'];
         }
         $vrb ='';
-        echo $vTime . "<br>";
         for($i=2; $i<strlen($vTime); $i++){
             if($vTime[$i] == 'M'){
                 $vrb .= ' mn.';
