@@ -1,5 +1,28 @@
 <?php
 session_start();
+
+function durationFetch($source){
+    $dur = file_get_contents("https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails&id=$source&key=AIzaSyBgr57WJ8YlgtH4jVFpMsJNVTr2iR8b3cE");
+
+    $duration = json_decode($dur, true);
+    foreach ($duration['items'] as $vidTime) {
+        $vTime= $vidTime['contentDetails']['duration'];
+    }
+    $vrb ='';
+    for($i=2; $i<strlen($vTime); $i++){
+        if($vTime[$i] == 'M'){
+            $vrb .= ' mn.';
+            $i = strlen($vTime);
+        }
+        else if($vTime[$i] == 'H'){
+            $vrb .= ' hr. ';
+        }
+        else{
+            $vrb .= $vTime[$i];
+        }
+    }
+    return $vrb;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -58,6 +81,96 @@ session_start();
                             Create
                         </button>
                     </form>
+                </div>
+
+            <!--Login form End-->
+        </section>
+
+
+        <section id="login-form-section" style="margin-top:10px;">
+            <!--Login form start-->
+
+                <div class="loginContainer d-flex direction-column">
+                    <h2 class="formtitle">
+                    Episode Management
+                    </h2>
+                    <form action="dashboard.php" id="loginForm" class="d-flex direction-column" method="post" name="episodeForm">
+                        <select style="height:50px; background: #333; border:none; color: white;" name="contentList">
+                           <?php
+                                   require_once('../config.php');
+
+                                   // Create connection
+                                   $conn = mysqli_connect($server, $username, $password,$database);
+                                   
+                                   // Check connection
+                                   if (!$conn) {
+                                     die("Connection failed: " . mysqli_connect_error());
+                                   }
+
+                                   $sql = 'SELECT * FROM content';
+                                   $result = mysqli_query($conn,$sql);
+                                   if(mysqli_num_rows($result)>0){
+                                       while($row = mysqli_fetch_assoc($result)){
+                                           echo '<option value="'.$row['id'].'">' . $row['content_name'] . "</option>";
+                                       }
+                                       echo '</select>';
+                                   }
+                                   ?>
+                        <input type="text" name="episodeName" id="episodeName" class="episodeName" placeholder="Episode Name"  required/>
+                        <input type="number" name="seasonNo" id="seasonNo" class="seasonNo" placeholder="Season No" min='1' required/>
+                        <input type="number" name="episodeNo" id="episodeNo" class="episodeNo" placeholder="Episode No" min='1' required/>
+                        <input type="text" name="episodeDesc" id="episodeDesc" class="episodeDesc" placeholder="Episode Description"  required/>
+                        <input type="text" name="episodeSource" id="episodeSource" class="episodeSource" placeholder="Episode Source"  required/>
+                        <button type='submit' name='add' class='button submitButton' id='signInButton'>
+                            Add
+                        </button>
+                    </form>
+                    <?php
+                        require_once('../config.php');
+
+                        // Create connection
+                        $conn = mysqli_connect($server, $username, $password,$database);
+                        
+                        // Check connection
+                        if (!$conn) {
+                            die("Connection failed: " . mysqli_connect_error());
+                        }
+
+                        if(isset($_POST['add'])){
+                            $contentOption = $_POST['contentList'];
+                            $episodeName = $_POST['episodeName'];
+                            $episodeNo = $_POST['episodeNo'];
+                            $episodeDescription = $_POST['episodeDesc'];
+                            $episodeSource = $_POST['episodeSource'];
+                            $episodeOfSeason = $_POST['seasonNo'];
+                            $search_sql = 'SELECT * FROM seasonal_content WHERE season_no = "'.$_POST['seasonNo'].'"';
+                            $res = mysqli_query($conn,$search_sql);
+                            if(mysqli_num_rows($res)<1){
+                                $sql = 'INSERT INTO seasonal_content (content_id,season_no) VALUES (?,?)';
+                                $statement = mysqli_prepare($conn,$sql);
+                                mysqli_stmt_bind_param($statement,'ii',$contentOption,$episodeOfSeason);
+                                mysqli_stmt_execute($statement);
+                                print(mysqli_stmt_error($statement) . "\n");
+                                mysqli_stmt_close($statement);
+                            }
+                        
+                            $sql2 = 'SELECT content.id AS cid,seasonal_content.content_id AS sccid, seasonal_content.id AS scid FROM content,seasonal_content WHERE content.id=seasonal_content.content_id AND content.id="'.$_POST['contentList'].'"';
+                            $result = mysqli_query($conn,$sql2);
+                            if(mysqli_num_rows($result)>0){
+                                while($row2 = mysqli_fetch_assoc($result)){
+                                    $seasonalID = $row2['scid'];
+                                }
+
+                                $episodeDuration = durationFetch($episodeSource);
+                                $query = "INSERT INTO episode (content_id,season_id,episode_name,episode_duration,episode_no,episode_desc,source) VALUES (?,?,?,?,?,?,?)";
+                                $statement = mysqli_prepare($conn,$query);
+                                mysqli_stmt_bind_param($statement,'iississ',$contentOption,$seasonalID,$episodeName,$episodeDuration,$episodeNo,$episodeDescription,$episodeSource);
+                                mysqli_stmt_execute($statement);
+                                print(mysqli_stmt_error($statement) . "\n");
+                                mysqli_stmt_close($statement);
+                            }
+                        }
+                    ?>
                 </div>
 
             <!--Login form End-->
@@ -274,29 +387,6 @@ session_start();
             $data = htmlspecialchars($data);
             return $data;
           }
-
-        function durationFetch($source){
-        $dur = file_get_contents("https://youtube.googleapis.com/youtube/v3/videos?part=contentDetails&id=$source&key=AIzaSyBgr57WJ8YlgtH4jVFpMsJNVTr2iR8b3cE");
-
-        $duration = json_decode($dur, true);
-        foreach ($duration['items'] as $vidTime) {
-            $vTime= $vidTime['contentDetails']['duration'];
-        }
-        $vrb ='';
-        for($i=2; $i<strlen($vTime); $i++){
-            if($vTime[$i] == 'M'){
-                $vrb .= ' mn.';
-                $i = strlen($vTime);
-            }
-            else if($vTime[$i] == 'H'){
-                $vrb .= ' hr. ';
-            }
-            else{
-                $vrb .= $vTime[$i];
-            }
-        }
-        return $vrb;
-        }
     ?>
 
 
