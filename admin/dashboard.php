@@ -47,7 +47,7 @@ function durationFetch($source){
     <main style="padding: 0px 10px;">
         <header class="d-flex space-between middle-align">
            <a href="index.html">
-            <img src="../images/logo.png" height="50px" width="170px" alt="site logo main" style="margin: auto;"></img>
+            <img src="../images/42.png" height="50px" width="170px" alt="site logo main" style="margin: auto;"></img>
         </a> 
         </header>
         <section id="login-form-section">
@@ -60,9 +60,9 @@ function durationFetch($source){
                     <form action="dashboard.php" id="loginForm" class="d-flex direction-column" method="post" name="loginForm">
                         <input type="text" name="contentName" id="contentName" class="contentName" placeholder="Content Name" required/>
                         <p id="errorContent">Please enter a valid content name</p>
-                        <input type="number" name="contentAge" id="contentAge" class="contentAge" placeholder="Content Age Limit" required/>
+                        <input type="number" name="contentAge" id="contentAge" class="contentAge" placeholder="Content Age Limit" min='1' required/>
                         <input type="number" name="contentDate" id="contentDate" class="contentDate" placeholder="Release Year"  required/>
-                        <input type="text" name="contentSource" id="contentSource" class="contentSource" placeholder="Content Source" required/>
+                        <input type="text" name="contentSource" id="contentSource" class="contentSource" placeholder="Content Source" />
                         <span style="margin-top:15px; font-size:15px;">Season Information</span>
                         <input style="margin-top:10px;" type="radio" id="seasonal" name="radio" <?php if (isset($radio) && $radio=="seasonal") echo "checked";?> value="seasonal">
                         <label style="margin-top:-20px; margin-left:25px" for="Seasonal">Seasonal</label><br>
@@ -380,6 +380,8 @@ function durationFetch($source){
             }
 
         }
+
+        // if(isset())
 
         function test_input($data) {
             $data = trim($data);
