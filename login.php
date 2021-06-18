@@ -106,6 +106,17 @@ if(isset($_POST['login'])){
 		}
 	}
 }
+
+$sql = 'SELECT * FROM content';
+$result = mysqli_query($conn,$sql);
+if(mysqli_num_rows($result)>0){
+    while($row = mysqli_fetch_assoc($result)){
+        $_SESSION['hero'] = $row['source'];
+        $_SESSION['hero_name'] = $row['content_name'];
+        $_SESSION['hero_id'] = $row['id'];
+    }
+}
+
 ?>
 
 </body>
