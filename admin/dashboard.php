@@ -63,6 +63,7 @@ function durationFetch($source){
                         <input type="number" name="contentAge" id="contentAge" class="contentAge" placeholder="Content Age Limit" min='1' required/>
                         <input type="number" name="contentDate" id="contentDate" class="contentDate" placeholder="Release Year"  required/>
                         <input type="text" name="contentSource" id="contentSource" class="contentSource" placeholder="Content Source" />
+                        <input type="text" name="contentDesc" id="contentDesc" class="contentDesc" placeholder="Content Description" />
                         <span style="margin-top:15px; font-size:15px;">Season Information</span>
                         <input style="margin-top:10px;" type="radio" id="seasonal" name="radio" <?php if (isset($radio) && $radio=="seasonal") echo "checked";?> value="seasonal">
                         <label style="margin-top:-20px; margin-left:25px" for="Seasonal">Seasonal</label><br>
@@ -212,14 +213,15 @@ function durationFetch($source){
             $contentAge = $_POST['contentAge'];
             $contentDate = $_POST['contentDate'];
             $contentSource = $_POST['contentSource'];
+            $contentDesc = $_POST['contentDesc'];
             $seasonInfo = test_input($_POST['radio']);
             $contentType = test_input($_POST['contentType']);
 
             if($seasonInfo == 'notSeasonal'){
                 if($contentType == 'movie' || $contentType == 'documentary'){
-                    $query = "INSERT INTO content (content_name,age_limit,content_date,source) VALUES (?,?,?,?)";
+                    $query = "INSERT INTO content (content_name,age_limit,content_date,source,content_desc) VALUES (?,?,?,?,?)";
                     $statement = mysqli_prepare($conn,$query);
-                    mysqli_stmt_bind_param($statement,'siis',$contentName,$contentAge,$contentDate,$contentSource);
+                    mysqli_stmt_bind_param($statement,'siiss',$contentName,$contentAge,$contentDate,$contentSource,$contentDesc);
                     mysqli_stmt_execute($statement);
                     print(mysqli_stmt_error($statement) . "\n");
                     mysqli_stmt_close($statement);
