@@ -88,16 +88,9 @@ session_start();
 
         <!-- hero section video-->
         <div class="videocontainer">
-            <video controls crossorigin playsinline
-                poster="../images/movies/murder mystery.jpg" id="player">
-                <!-- Video files -->
-                <source src="../images/movies/videos/Murder Mystery - Trailer - Netflix.mp4" type="video/mp4"
-                    >
-
-                <!-- Caption files -->
-                <track kind="captions" label="English" srclang="en"
-                    src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt" default>
-            </video>
+                <iframe  width="100%" height="450" 
+                  src="https://www.youtube.com/embed/il_t1WVLNxk/?controls=1">
+                </iframe>
         </div>
 
         <script>
