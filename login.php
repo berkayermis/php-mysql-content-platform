@@ -114,6 +114,7 @@ if(mysqli_num_rows($result)>0){
         $_SESSION['hero'] = $row['source'];
         $_SESSION['hero_name'] = $row['content_name'];
         $_SESSION['hero_id'] = $row['id'];
+        $_SESSION['hero_desc'] = $row['content_desc'];
     }
 }
 

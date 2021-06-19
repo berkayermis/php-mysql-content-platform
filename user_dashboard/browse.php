@@ -115,7 +115,8 @@ session_start();
                         </div>
                         <div class="synopsis m-t-20" style="max-width: 500px;">
                             <p>
-                                <?php echo $_SESSION['hero_name'] ?>
+                                <?php echo '<h1> <b>' . $_SESSION['hero_name'] . '</b>  </h1>'; ?>
+                                <?php echo $_SESSION['hero_desc']; ?>
                             </p>
                         </div>
                         <div class="buttons-container m-t-20">
@@ -131,7 +132,7 @@ session_start();
 
             <!--paretn div with black bg after main hero section-->
             <div class="black-background">
-            
+
                 <!--my list -->
                 <section id="mylist" class="container">
 
