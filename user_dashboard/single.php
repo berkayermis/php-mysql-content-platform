@@ -118,10 +118,12 @@ session_start();
                                 $b = 1;
                                 while($row3 = mysqli_fetch_assoc($result3)){
                                     if($b != $row3['season_no']){
+                                        echo '<div style="display:flex; flex-wrap:wrap;">';
                                         echo "Season ".$row3['season_no'] . "<br>";
+                                        echo '</div>';
                                     }
-                                    echo '<iframe  width="25%" height="200" 
-                                    src="https://www.youtube.com/embed/'.$row3['source'].'/?controls=1"></iframe><br>';
+                                    echo '<iframe style="margin-right:5px;"  width="30%" height="200" 
+                                    src="https://www.youtube.com/embed/'.$row3['source'].'/?controls=1"></iframe>';
                                     }
                                 }
                             else{

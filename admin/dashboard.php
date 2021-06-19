@@ -46,7 +46,7 @@ function durationFetch($source){
 
     <main style="padding: 0px 10px;">
         <header class="d-flex space-between middle-align">
-           <a href="index.html">
+           <a href="../index.php">
             <img src="../images/42.png" height="50px" width="170px" alt="site logo main" style="margin: auto;"></img>
         </a> 
         </header>
