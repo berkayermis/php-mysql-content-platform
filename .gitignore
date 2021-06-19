@@ -1,5 +1,5 @@
 assets/lib
-assets/js
+/assets/js
 assets/images/movies
 assets/images/tv-show
 config.php
