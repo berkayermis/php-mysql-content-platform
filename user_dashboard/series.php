@@ -97,25 +97,43 @@ session_start();
                         Series 
                     </h4>
                     <div class="romantic-container d-flex flex-start flex-middle flex-no-wrap owl-carousel">
-                        <a href="#">
-                            <img src="../images/movies/horrible-bosses-middle-poster.webp" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                        <a href="#">
-                            <img src="../images/movies/kabir-singh-poster.webp" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                        <a href="#">
-                            <img src="../images/movies/extraction-poster.jpg" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                        <a href="#">
-                            <img src="../images/tv-show/poster/never-have-ever-short poster.jpg" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                        <a href="#">
-                            <img src="../images/movies/we-are-the-milers-poster-little.webp" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
+                    <?php
+                        require_once('../config.php');
 
-                        <a href="#">
-                            <img src="../images/movies/we-are-the-milers-poster-little.webp" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
+                        // Create connection
+                        $conn = mysqli_connect($server, $username, $password,$database);
+                        
+                        // Check connection
+                        if (!$conn) {
+                            die("Connection failed: " . mysqli_connect_error());
+                        }
+
+                        $sql = 'SELECT *,content.id AS cid FROM content,serie WHERE content.id=serie.content_id';
+                        $result = mysqli_query($conn,$sql);
+                        if(mysqli_num_rows($result)>0){
+                            while($row = mysqli_fetch_assoc($result)){
+                                $x = $row['source'];
+                                echo '<div class="video">' .
+                                '<div class="mylist-img p-r-10 p-t-10 video-item">' . 
+                                '<img src="https://img.youtube.com/vi/'.$row['source'].'/0.jpg">'. 
+                                '</div>' . 
+                                '<div class="video-description d-flex flex-end direction-column">' . 
+                                    '<div>' . 
+                                        '<button style="background-color:red; border:none;
+                                        text-align: center; padding:10px;">' . 
+                                        '<a href="single.php?id='.$row['cid'].'&name='.$row['content_name'].'" style="color:white;">' . "<strong>Play</strong>" . '</a>' . 
+                                        '</button>' . 
+                                    '</div>' . 
+                                    '<div>' . 
+                                    '<h4 class="heading f-w-8 text-shadow">' . 
+                                    $row['content_name'] . 
+                                    '</h4>' . 
+                                    '</div>' . 
+                                '</div>' . 
+                            "</div>";
+                            }
+                        }
+                    ?>
 
                     </div>
                 </section>

@@ -131,8 +131,7 @@ session_start();
 
             <!--paretn div with black bg after main hero section-->
             <div class="black-background">
-
-
+            
                 <!--my list -->
                 <section id="mylist" class="container">
 
