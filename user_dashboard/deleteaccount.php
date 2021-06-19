@@ -1,8 +1,5 @@
 <?php
 session_start();
-?>
-
-<?php
 
 require_once('../config.php');
 
@@ -24,5 +21,3 @@ if (!$conn) {
       } else {
         echo "Error updating record: " . mysqli_error($conn);
       }
-
-?>

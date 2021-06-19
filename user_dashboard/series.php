@@ -77,7 +77,7 @@ session_start();
                             <div class="line"></div>
                             <div class="links d-flex direction-column">
                                 <a href="account.php">Account</a>
-                                <a href="../index.php">Sign Out of Redaflix</a>
+                                <a href="../index.php">Sign Out of Forty-Two</a>
                             </div>
     
                         </div>
