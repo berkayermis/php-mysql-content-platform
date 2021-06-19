@@ -50,31 +50,7 @@ session_start();
                 <a href="mylist.php" class="nav-item">Wish List</a>
             </div>
             <div class="righticons d-flex flex-end flex-middle">
-            <!-- <a href="../search.html">
-                <img src="../../images/icons/search.svg" alt="search icon">
-            </a>
-            <div class="dropdown notification">
-                <img src="../../images/icons/notification.svg" alt="notificatio icon">
-                <div class="dropdown-content">
-                    <a href="#" class="profile-item d-flex flex-middle">
-                        <img src="../../images/icons/user2.png" alt="user profile icon" class="user-icon">
-                        <span>You have new notification from <span>User 123</span></span>
-                    </a>
-                    <a href="#" class="profile-item d-flex flex-middle">
-                        <img src="../../images/icons/user1.png" alt="user profile icon" class="user-icon">
-                        <span>You have new notification from <span>User 123</span></span>
-                    </a>
-                    <a href="#" class="profile-item d-flex flex-middle">
-                        <img src="../../images/icons/user4.png" alt="user profile icon" class="user-icon">
-                        <span>You have new notification from <span>User 123</span></span>
-                    </a>
-                    <a href="#" class="profile-item d-flex flex-middle">
-                        <img src="../../images/icons/user3.png" alt="user profile icon" class="user-icon">
-                        <span>You have new notification from <span>User 123</span></span>
-                    </a>
-                </div>
-            </div> -->
-                
+
                 <div class="dropdown">
                     <img src="../images/icons/user-image-green.png" alt="user profile icon" class="user-icon"> <span
                         class="profile-arrow"></span>
@@ -117,15 +93,19 @@ session_start();
                     <h4 class="headline">
                         MEMBERSHIP & BILLING
                     </h4>
-                    <button href="deleteaccount.php?id=$dsdskd" class="button">Cancel Membership</button>
+                    <form action="deleteaccount.php" id="cancelMembership" onsubmit="return submitBeforeFunction()">
+                    <button class="button" type="submit" id="btnCancel">Cancel Membership</a>
+                    </form>
                 </div>
                 <div class="right">
                     <div class="d-flex space-between">
                         <div class="email">
-                            <strong>fatihfurkanak2@gmail.com</strong>
+                                <?php 
+                                    echo $_SESSION['email'];  
+                                ?>
                         </div>
                         <div class="link">
-                            <a href="#" class="link-item">
+                            <a href="user.php" class="link-item">
                                 Change account email
                             </a>
                         </div>
@@ -136,7 +116,7 @@ session_start();
                             Password: *********
                         </div>
                         <div class="link">
-                            <a href="#" class="link-item">
+                            <a href="user.php" class="link-item">
                                 Change password
                             </a>
                         </div>
@@ -144,10 +124,12 @@ session_start();
 
                     <div class="d-flex space-between">
                         <div class="email">
-                            Phone: +90 555 380 0909
+                            <?php 
+                                 echo 'Phone: ' . $_SESSION['phone'];
+                            ?>
                         </div>
                         <div class="link">
-                            <a href="#" class="link-item">
+                            <a href="user.php" class="link-item">
                                 Change phone number
                             </a>
                         </div>
@@ -159,11 +141,8 @@ session_start();
                             <h4><span class="icon-visa">VISA</span> •••• •••• •••• 5350</h4>
                         </div>
                         <div class="link">
-                            <a href="#" class="link-item">
+                            <a href="user.php" class="link-item">
                                 Update payment info
-                            </a>
-                            <a href="#" class="link-item">
-                                Biling details
                             </a>
                         </div>
                     </div>
@@ -236,6 +215,14 @@ session_start();
         </a>
     </div>
 
+<script>
+const buttonCancel = document.querySelector('#cancelMembership');
+
+function submitBeforeFunction(e){
+    return confirm("are you sure for cancel your membership?");
+}
+
+</script>
 
 </body>
 
