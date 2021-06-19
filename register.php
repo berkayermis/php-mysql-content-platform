@@ -32,10 +32,10 @@
                         Register Account
                     </h2>
                     <form action="register.php" id="loginForm" class="d-flex direction-column" method="post" name="loginForm">
-                        <input type="text" name="email" id="email" class="email" placeholder="Email Address" onchange="validateEmail()" required/>
-                        <p id="errorEmail">Please enter a valid email address or phone number.</p>
-                        <input type="text" name="name" id="name" class="name" placeholder="Fullname" required/>
-                        <input type="tel" name="phone" id="phone" class="phone" placeholder="Phone number" required/> 
+                        <input type="text" name="email" id="email" class="email" placeholder="E-Mail Address" onchange="validateEmail()" required/>
+                        <p id="errorEmail">Please enter a valid e-mail address.</p>
+                        <input type="text" name="name" id="name" class="name" placeholder="Full Name" required/>
+                        <input type="number" name="phone" id="phone" class="phone" placeholder="Phone Number" required/> 
                         <input type="password" name="password" id="password" placeholder="Password" required/>
                         <p id="errorPassword">Your password must contain between 4 and 60 characters.</p>
 

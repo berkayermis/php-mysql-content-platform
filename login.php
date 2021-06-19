@@ -41,7 +41,7 @@
                             Sign In
                         </button>
                         <p class="signUpText para">
-                            New to Redaflix? <span class="signUp"><a href="register.php">Sign up Now</a></span>
+                            New to Forty-Two? <span class="signUp"><a href="register.php">Sign up Now</a></span>
                         </p>
                     </form>
                 </div>
@@ -90,19 +90,27 @@ if(isset($_POST['login'])){
 	$result = mysqli_query($conn,$sql);
 	if(mysqli_num_rows($result)>0){
 		while($row = mysqli_fetch_assoc($result)){
-			if($row['email'] == $user_email && $row['user_pass'] == $user_pass){
-				$_SESSION['email'] = $row['email'];
-				$_SESSION['user'] = $row['username'];
-				$_SESSION['user_pass'] = $row['user_pass'];
-				$_SESSION['phone'] = $row['phone'];
-                $_SESSION['user_id'] = $row['id'];
-				header('Location: user_dashboard/browse.php');
-				exit;
-			}
-            else{
-                $message = "Wrong email or password";
-                echo "<script type='text/javascript'>alert('$message');</script>"; 
+            if($row['is_active'] == "0"){
+                $message = 'Your account is not enabled.';
+                echo "<script type='text/javascript'>alert('$message');</script>";
             }
+
+            else{
+                if($row['email'] == $user_email && $row['user_pass'] == $user_pass){
+                    $_SESSION['email'] = $row['email'];
+                    $_SESSION['user'] = $row['username'];
+                    $_SESSION['user_pass'] = $row['user_pass'];
+                    $_SESSION['phone'] = $row['phone'];
+                    $_SESSION['user_id'] = $row['id'];
+                    header('Location: user_dashboard/browse.php');
+                    exit;
+                }
+                else{
+                    $message = "Wrong email or password";
+                    echo "<script type='text/javascript'>alert('$message');</script>"; 
+                }
+            }
+			
 		}
 	}
 }
@@ -115,6 +123,7 @@ if(mysqli_num_rows($result)>0){
         $_SESSION['hero_name'] = $row['content_name'];
         $_SESSION['hero_id'] = $row['id'];
         $_SESSION['hero_desc'] = $row['content_desc'];
+
     }
 }
 
