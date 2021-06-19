@@ -42,7 +42,7 @@ session_start();
 
         <header class="d-flex space-between flex-center flex-middle">
             <div class="nav-links d-flex flex-center flex-middle">
-                <a href="/"> <img src="../images/42.png" height="50px" width="170px" alt="site logo main"></img> </a>
+                <a href="browse.php"> <img src="../images/42.png" height="50px" width="170px" alt="site logo main"></img> </a>
                 <a href="browse.php" class="nav-item home">Home</a>
                 <a href="series.php" class="nav-item">Series</a>
                 <a href="movies.php" class="nav-item">Movies</a>

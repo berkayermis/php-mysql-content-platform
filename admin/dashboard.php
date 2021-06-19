@@ -180,9 +180,9 @@ function durationFetch($source){
                                 }
 
                                 $episodeDuration = durationFetch($episodeSource);
-                                $query = "INSERT INTO episode (content_id,season_id,episode_name,episode_duration,episode_no,episode_desc,source) VALUES (?,?,?,?,?,?,?)";
+                                $query = "INSERT INTO episode (content_id,season_id,episode_name,episode_duration,season_no,episode_no,episode_desc,source) VALUES (?,?,?,?,?,?,?,?)";
                                 $statement = mysqli_prepare($conn,$query);
-                                mysqli_stmt_bind_param($statement,'iississ',$contentOption,$seasonalID,$episodeName,$episodeDuration,$episodeNo,$episodeDescription,$episodeSource);
+                                mysqli_stmt_bind_param($statement,'iissiiss',$contentOption,$seasonalID,$episodeName,$episodeDuration,$episodeOfSeason,$episodeNo,$episodeDescription,$episodeSource);
                                 mysqli_stmt_execute($statement);
                                 print(mysqli_stmt_error($statement) . "\n");
                                 mysqli_stmt_close($statement);

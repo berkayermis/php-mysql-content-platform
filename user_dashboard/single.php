@@ -31,7 +31,7 @@ session_start();
 
         <header class="d-flex space-between flex-center flex-middle">
             <div class="nav-links d-flex flex-center flex-middle">
-                <a href="/"> <img src="../images/42.png" height="50px" width="170px" alt="site logo main"></img></a>
+                <a href="browse.php"> <img src="../images/42.png" height="50px" width="170px" alt="site logo main"></img></a>
                 <a href="browse.php" class="nav-item home">Home</a>
                 <a href="series.php" class="nav-item">Series</a>
                 <a href="movies.php" class="nav-item">Movies</a>
@@ -98,13 +98,40 @@ session_start();
                         die("Connection failed: " . mysqli_connect_error());
                     }
 
-                    $sql = 'SELECT * FROM content WHERE content.id = "'.$_GET['id'].'"';
+                    
+                    $x = $_GET['id'];
+                    $sql = "SELECT * FROM content,no_season_content WHERE content.id =$x AND no_season_content.content_id=$x";
                     $result = mysqli_query($conn,$sql);
                     if(mysqli_num_rows($result)>0){
                         $row = mysqli_fetch_assoc($result);
-                        echo '<iframe  width="100%" height="450" 
+                        echo '<iframe  width="100%" height="400" 
                         src="https://www.youtube.com/embed/'.$row['source'].'/?controls=1"></iframe>';
                     }
+                    else{
+                        $sql2 = "SELECT * FROM content,seasonal_content WHERE content.id=$x AND seasonal_content.content_id=$x";
+                        $result2=mysqli_query($conn,$sql2);
+                        if(mysqli_num_rows($result2)>0){
+                            $sql3 = "SELECT * FROM episode WHERE content_id = $x";
+                            $result3 = mysqli_query($conn,$sql3);
+                            if(mysqli_num_rows($result3)>0){
+                                echo "Season 1 <br>";
+                                $b = 1;
+                                while($row3 = mysqli_fetch_assoc($result3)){
+                                    if($b != $row3['season_no']){
+                                        echo "Season ".$row3['season_no'] . "<br>";
+                                    }
+                                    echo '<iframe  width="25%" height="200" 
+                                    src="https://www.youtube.com/embed/'.$row3['source'].'/?controls=1"></iframe><br>';
+                                    }
+                                }
+                            else{
+                                while($row2 = mysqli_fetch_assoc($result2)){
+                                    echo '<iframe  width="100%" height="400" 
+                                    src="https://www.youtube.com/embed/'.$row2['source'].'/?controls=1"></iframe><br>';
+                                }
+                            }
+                            }
+                        }
                   ?>
         </div>
 
