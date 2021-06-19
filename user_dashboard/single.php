@@ -67,16 +67,15 @@ session_start();
     
                         <div class="dropdown-content">
                             <div class="profile-links">
-                                <a href="#" class="profile-item d-flex flex-middle">
+                                <a href="account.php" class="profile-item d-flex flex-middle">
                                     <img src="../images/icons/user1.png" alt="user profile icon" class="user-icon">
                                     <span><?php echo $_SESSION['user']; ?></span>
                                 </a>
                             </div>
                             <div class="line"></div>
                             <div class="links d-flex direction-column">
-                                <a href="home.php">Account</a>
-                                <a href="#">Help Center</a>
-                                <a href="/">Sign Out of Redaflix</a>
+                                <a href="account.php">Account</a>
+                                <a href="../index.php">Sign Out of Redaflix</a>
                             </div>
     
                         </div>
@@ -88,9 +87,25 @@ session_start();
 
         <!-- hero section video-->
         <div class="videocontainer">
-                <iframe  width="100%" height="450" 
-                  src="https://www.youtube.com/embed/il_t1WVLNxk/?controls=1">
-                </iframe>
+                  <?php 
+                    require_once('../config.php');
+
+                    // Create connection
+                    $conn = mysqli_connect($server, $username, $password,$database);
+                    
+                    // Check connection
+                    if (!$conn) {
+                        die("Connection failed: " . mysqli_connect_error());
+                    }
+
+                    $sql = 'SELECT * FROM content WHERE content.id = "'.$_GET['id'].'"';
+                    $result = mysqli_query($conn,$sql);
+                    if(mysqli_num_rows($result)>0){
+                        $row = mysqli_fetch_assoc($result);
+                        echo '<iframe  width="100%" height="450" 
+                        src="https://www.youtube.com/embed/'.$row['source'].'/?controls=1"></iframe>';
+                    }
+                  ?>
         </div>
 
         <script>
@@ -111,9 +126,53 @@ session_start();
 
         <section class="movieinformation container">
             <div class="movielogo">
-                <img src="../images/movies/murder mystery logo.webp" alt="">
+                <!-- <img src="../images/movies/murder mystery logo.webp" alt=""> -->
+                <?php echo '<h1 style="font-size:40px;">' . $_GET['name'] . '</h1>'; ?>
             </div>
-            <div class="movierelease">
+            <?php
+                require_once('../config.php');
+                $conn = mysqli_connect($server, $username, $password,$database);
+                
+                // Check connection
+                if (!$conn) {
+                    die("Connection failed: " . mysqli_connect_error());
+                }
+                $singleContent = $_GET['id'];
+                $sql1 = 'SELECT * FROM content,seasonal_content WHERE seasonal_content.content_id = '.$singleContent.' AND content.id = '.$singleContent.'';
+                $result1 = mysqli_query($conn,$sql1);
+                $sql2 = 'SELECT * FROM content,no_season_content WHERE (no_season_content.content_id = '.$singleContent.' AND content.id = '.$singleContent.')';
+                $result2 = mysqli_query($conn,$sql2);
+                if(mysqli_num_rows($result1)>0){
+                    $row = mysqli_fetch_assoc($result1);
+                        echo '<div class="movierelease">' . 
+                        '<span class="year">' . 
+                        $row['content_date'] . '</span>' . 
+                        '<span class="rating">' . 
+                        "PG-" . $row['age_limit'] . 
+                        '</span>' . 
+                        '<span class="timeduration">' . 
+                        $row['season_no'] . ' Season' . '</span>' . 
+                        '</div>' . 
+                        '<div class="description">' . 
+                        $row['content_desc'] . '</div>';
+                    }
+                else if(mysqli_num_rows($result2)>0){
+                    $row2 = mysqli_fetch_assoc($result2);
+                    echo '<div class="movierelease">' . 
+                    '<span class="year">' . 
+                    $row2['content_date'] . '</span>' . 
+                    '<span class="rating">' . 
+                    "PG-" . $row2['age_limit'] . 
+                    '</span>' . 
+                    '<span class="timeduration">' . 
+                    $row2['duration'] . '</span>' . 
+                    '</div>' . 
+                    '<div class="description">' . 
+                    $row2['content_desc'] . '</div>';
+                }
+                
+            ?>
+            <!-- <div class="movierelease">
                 <span class="year">
                     2019
                 </span>
@@ -129,14 +188,14 @@ session_start();
                 chance encounter leads to them being framed for the murder of an elderly billionaire.
             </div>
             <div class="castinformation">
-                <p><span class="name">Director:</span> Kyle Newacheck</p>
-                <p><span class="name">Screenplay:</span> James Vanderbilt</p>
-                <p><span class="name">Producers:</span> Adam Sandler, James Vanderbilt, Allen Covert, James D. Stern,
+                <p><span class="name">Actors:</span> Adam Sandler, James Vanderbilt, Allen Covert, James D. Stern,
                     Tripp Vinson, A.J. Dix</p>
-                <p><span class="name">Awards:</span> People's Choice Award for Favorite Comedic Movie</p>
-            </div>
+                <p><span class="name">Genres:</span> Aksion, Gizemli</p>
+                <p><span class="name">Language:</span> Aksion, Gizemli</p>
+            </div> -->
+
             <div class="actions d-flex flex-start flex-middle">
-                <a href="#" class="link-item">
+                <a href="/" class="link-item">
                     <i class="fa fa-plus"></i></br>
                     Wish List
                 </a>
@@ -149,7 +208,7 @@ session_start();
         <!--Hollywood Action movies-->
         <section id="similar" class="container p-t-40">
             <h4 class="romantic-heading">
-                More LIke This
+                More Like This
             </h4>
             <div class="romantic-container d-flex flex-start flex-middle">
                 <a href="#">

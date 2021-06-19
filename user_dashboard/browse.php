@@ -123,7 +123,7 @@ session_start();
                                     <svg viewBox="0 0 24 24">
                                         <path d="M6 4l15 8-15 8z" fill="currentColor"></path>
                                     </svg>
-                                </span> <a href='single.php?id=<?php echo $_SESSION['hero_id'];?>'> Play</a></button>
+                                </span> <a href='single.php?id=<?php echo $_SESSION['hero_id'];?>&name=<?php echo $_SESSION['hero_name'];?>'>Play</a></button>
                         </div>
                     </div>
                 </section>
@@ -165,7 +165,7 @@ session_start();
                                     '<div>' . 
                                         '<button style="background-color:red; border:none;
                                         text-align: center; padding:10px;">' . 
-                                        '<a href="single.php?id='.$row['id'].'" style="color:white;">' . "<strong>Play</strong>" . '</a>' . 
+                                        '<a href="single.php?id='.$row['id'].'&name='.$row['content_name'].'" style="color:white;">' . "<strong>Play</strong>" . '</a>' . 
                                         '</button>' . 
                                     '</div>' . 
                                     '<div>' . 

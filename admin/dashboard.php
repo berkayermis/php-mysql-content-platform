@@ -144,16 +144,33 @@ function durationFetch($source){
                             $episodeDescription = $_POST['episodeDesc'];
                             $episodeSource = $_POST['episodeSource'];
                             $episodeOfSeason = $_POST['seasonNo'];
-                            $search_sql = 'SELECT * FROM seasonal_content WHERE season_no = "'.$_POST['seasonNo'].'"';
-                            $res = mysqli_query($conn,$search_sql);
-                            if(mysqli_num_rows($res)<1){
-                                $sql = 'INSERT INTO seasonal_content (content_id,season_no) VALUES (?,?)';
-                                $statement = mysqli_prepare($conn,$sql);
-                                mysqli_stmt_bind_param($statement,'ii',$contentOption,$episodeOfSeason);
-                                mysqli_stmt_execute($statement);
-                                print(mysqli_stmt_error($statement) . "\n");
-                                mysqli_stmt_close($statement);
+                            // if($episodeOfSeason>1){
+                            //     $sql = 'INSERT INTO seasonal_content (content_id,season_no) VALUES (?,?)';
+                            //     $statement = mysqli_prepare($conn,$sql);
+                            //     mysqli_stmt_bind_param($statement,'ii',$contentOption,$episodeOfSeason);
+                            //     mysqli_stmt_execute($statement);
+                            //     print(mysqli_stmt_error($statement) . "\n");
+                            //     mysqli_stmt_close($statement);
+                            // }
+                            if($episodeOfSeason>1){
+                                $search_sql = "UPDATE seasonal_content SET season_no=$episodeOfSeason
+                                WHERE seasonal_content.content_id=$contentOption";
+                                if (mysqli_query($conn, $search_sql)) {
+                                    echo "Record updated successfully";
+                                  } else {
+                                    echo "Error updating record: " . mysqli_error($conn);
+                                  }
+                                // $res = mysqli_query($conn,$search_sql);
+                                // if(mysqli_num_rows($res)<1){
+                                //     $sql = 'INSERT INTO seasonal_content (content_id,season_no) VALUES (?,?)';
+                                //     $statement = mysqli_prepare($conn,$sql);
+                                //     mysqli_stmt_bind_param($statement,'ii',$contentOption,$episodeOfSeason);
+                                //     mysqli_stmt_execute($statement);
+                                //     print(mysqli_stmt_error($statement) . "\n");
+                                //     mysqli_stmt_close($statement);
                             }
+
+                            
                         
                             $sql2 = 'SELECT content.id AS cid,seasonal_content.content_id AS sccid, seasonal_content.id AS scid FROM content,seasonal_content WHERE content.id=seasonal_content.content_id AND content.id="'.$_POST['contentList'].'"';
                             $result = mysqli_query($conn,$sql2);
