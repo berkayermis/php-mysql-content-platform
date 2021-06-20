@@ -111,7 +111,7 @@ session_start();
                         $sql2 = "SELECT * FROM content,seasonal_content WHERE content.id=$x AND seasonal_content.content_id=$x";
                         $result2=mysqli_query($conn,$sql2);
                         if(mysqli_num_rows($result2)>0){
-                            $sql3 = "SELECT * FROM episode WHERE content_id = $x";
+                            $sql3 = "SELECT * FROM episode WHERE content_id = $x ORDER BY season_no";
                             $result3 = mysqli_query($conn,$sql3);
                             if(mysqli_num_rows($result3)>0){
                                 echo "Season 1 <br>";
@@ -128,7 +128,7 @@ session_start();
                                 }
                             else{
                                 while($row2 = mysqli_fetch_assoc($result2)){
-                                    echo '<iframe  width="100%" height="400" 
+                                    echo '<iframe  width="100%" height="400"
                                     src="https://www.youtube.com/embed/'.$row2['source'].'/?controls=1"></iframe><br>';
                                 }
                             }
