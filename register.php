@@ -41,7 +41,6 @@ session_start();
                         <input type="number" name="phone" id="phone" class="phone" placeholder="Phone Number" required/> 
                         <input type="password" name="password" id="password" placeholder="Password" required/>
                         <p id="errorPassword">Your password must contain between 4 and 60 characters.</p>
-<<<<<<< HEAD
                         <h2 class="formtitle">
                         Payment Informations
                     </h2>
@@ -56,17 +55,6 @@ session_start();
                         <p class="signUpText para">
                             Have an account? <span class="signUp"><a href="login.php">Sign In</a></span>
                         </p>
-=======
-                        
-                        <h2 class="formtitle">Payment Method</h2>
-                        <input type="text" name="cardNo" id="cardNo" class="cardNo" placeholder="Card Number" required/>
-                        <input type="text" name="cardDate" id="cardDate" class="cardDate" placeholder="Expiration Date (MM/YY)" required/>
-                        <input type="text" name="cardCVV" id="cardCVV" class="cardCVV" placeholder="Security Code (CVV)" required/>
-                        <input type="text" name="cardHN" id="cardHN" placeholder="Cardholder Name" required/>
-                    
-                        <button type="submit" name="submit" class="button submitButton" id="signInButton">Register</button>
-                        <p class="signUpText para">Have an account? <span class="signUp"><a href="login.php">Sign In</a></span></p>
->>>>>>> 1297d3f98b98c7f8c090e11acf1a7596194cba48
                     </form>
                 </div>
         </section>

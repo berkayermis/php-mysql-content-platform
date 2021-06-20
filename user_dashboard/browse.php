@@ -215,7 +215,7 @@ session_start();
                                     '<div>' . 
                                         '<button style="background-color:red; border:none;
                                         text-align: center; padding:10px;">' . 
-                                        '<a href="single.php?id='.$row['id'].'&name='.$row['content_name'].'" style="color:white;">' . "<strong>Play</strong>" . '</a>' . 
+                                        '<a href="single.php?id='.$row['content_id'].'&name='.$row['content_name'].'" style="color:white;">' . "<strong>Play</strong>" . '</a>' . 
                                         '</button>' . 
                                     '</div>' . 
                                     '<div>' . 
@@ -262,7 +262,7 @@ session_start();
                                     '<div>' . 
                                         '<button style="background-color:red; border:none;
                                         text-align: center; padding:10px;">' . 
-                                        '<a href="single.php?id='.$row['id'].'&name='.$row['content_name'].'" style="color:white;">' . "<strong>Play</strong>" . '</a>' . 
+                                        '<a href="single.php?id='.$row['content_id'].'&name='.$row['content_name'].'" style="color:white;">' . "<strong>Play</strong>" . '</a>' . 
                                         '</button>' . 
                                     '</div>' . 
                                     '<div>' . 
@@ -309,7 +309,7 @@ session_start();
                                     '<div>' . 
                                         '<button style="background-color:red; border:none;
                                         text-align: center; padding:10px;">' . 
-                                        '<a href="single.php?id='.$row['id'].'&name='.$row['content_name'].'" style="color:white;">' . "<strong>Play</strong>" . '</a>' . 
+                                        '<a href="single.php?id='.$row['content_id'].'&name='.$row['content_name'].'" style="color:white;">' . "<strong>Play</strong>" . '</a>' . 
                                         '</button>' . 
                                     '</div>' . 
                                     '<div>' . 
