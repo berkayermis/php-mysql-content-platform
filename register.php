@@ -98,17 +98,11 @@ session_start();
             $user = $_POST['name'];
             $pass = $_POST['password'];
             $phoneNo = $_POST['phone'];
-            $_SESSION['reg_email'] = $email_addr;
-            $_SESSION['reg_pass'] = $pass;
-
+            
             $cardNo = $_POST['cardNo'];
             $cardDate = $_POST['cardDate'];
             $cardCVV = $_POST['cardCVV'];
             $cardHN = $_POST['cardHN'];
-            $_SESSION['reg_cardNo'] = $cardNo;
-            $_SESSION['reg_cardDate'] = $cardDate;
-            $_SESSION['reg_cardCVV'] = $cardCVV;
-            $_SESSION['reg_cardHN'] = $cardHN;
 
             $active = 1;
             $query = "INSERT INTO user (email,username,user_pass,phone,is_active) VALUES (?,?,?,?,?)";
