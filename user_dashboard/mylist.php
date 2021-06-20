@@ -86,27 +86,9 @@ session_start();
                     My List
                 </h4>
                 <div class="my-list-page-container d-flex flex-start flex-middle">
-                    <a href="#">
+                    <a href="single.php">
                         <img src="../images/movies/horrible-bosses-middle-poster.webp" alt=""
                             class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                    <a href="#">
-                        <img src="../images/movies/kabir-singh-poster.webp" alt=""
-                            class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                    <a href="#">
-                        <img src="../images/movies/extraction-poster.jpg" alt=""
-                            class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                    <a href="#">
-                        <img src="../images/tv-show/poster/never-have-ever-short poster.jpg" alt=""
-                            class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                    <a href="#">
-                        <img src="../images/movies/we-are-the-milers-poster-little.webp" alt=""
-                            class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                    <a href="#">
-                        <img src="../images/movies/kabir-singh-poster.webp" alt=""
-                            class="mylist-img p-r-10 p-t-10 image-size item"></a>
-
-
-
                 </div>
             </section>
 
