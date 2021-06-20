@@ -152,7 +152,10 @@ session_start();
                             die("Connection failed: " . mysqli_connect_error());
                         }
 
-                        $sql = 'SELECT * FROM content';
+                        $usr = $_SESSION['user_id'];
+                        $sql = "SELECT DISTINCT content.id,content_name,source FROM content,content_tag WHERE tag_name IN 
+                        (SELECT DISTINCT tag_name FROM wishlist,content_tag WHERE wishlist.user_id='$usr'
+                        AND wishlist.content_id=content_tag.content_id) AND content.id = content_tag.content_id";
                         $result = mysqli_query($conn,$sql);
                         if(mysqli_num_rows($result)>0){
                             while($row = mysqli_fetch_assoc($result)){
@@ -228,10 +231,10 @@ session_start();
                     </div>
                 </section>
 
-                <!--Serials-->
+                <!--Series-->
                 <section id="romantic" class="container p-t-40">
                     <h4 class="romantic-heading">
-                        Serials
+                        Series
                     </h4>
                     <div class="mylist-container d-flex flex-start flex-middle flex-no-wrap owl-carousel">
 

@@ -83,7 +83,7 @@ session_start();
             <!--my list container-->
             <section id="mylist" class="container p-t-40" style="padding-top: 180px;">
                 <h4 class="romantic-heading">
-                    My List
+                    Wish List
                 </h4>
                 <div class="my-list-page-container d-flex flex-start flex-middle">
                 <?php 
