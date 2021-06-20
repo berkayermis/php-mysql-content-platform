@@ -198,30 +198,30 @@ session_start();
                     '</div>' . 
                     '<div class="description">' . 
                     $row2['content_desc'] . '</div> <br>';
-                    $sqlActor = "SELECT * FROM content_actor WHERE content_actor.content_id = '$singleContent'";
-                    $resultActor = mysqli_query($conn,$sqlActor);
-                    if(mysqli_num_rows($resultActor)>0){
-                        echo '<p> <span class="name">' . '<b>Actors:</b> </span>';
-                        $x = 0;
-                        while($rowActor = mysqli_fetch_assoc($resultActor)){
-                            echo $rowActor['actor_name'];
-                            $x++;
-                            if($x != mysqli_num_rows($resultActor)){
-                                echo ', ';
-                            }
+                }
+                $sqlActor = "SELECT * FROM content_actor WHERE content_actor.content_id = '$singleContent'";
+                $resultActor = mysqli_query($conn,$sqlActor);
+                echo '<p> <span class="name">' . '<b>Actors:</b> </span>';
+                if(mysqli_num_rows($resultActor)>0){
+                    $count = 0;
+                    while($rowActor = mysqli_fetch_assoc($resultActor)){
+                        echo $rowActor['actor_name'];
+                        $count++;
+                        if($count != mysqli_num_rows($resultActor)){
+                            echo ', ';
                         }
-                        echo '</p>';
                     }
+                    echo '</p>';
                 }
                 $sqlTag = "SELECT * FROM content_tag WHERE content_tag.content_id = '$singleContent'";
                 $resultTag = mysqli_query($conn,$sqlTag);
+                echo '<p> <span class="name">' . '<b>Genres:</b> </span>';
                 if(mysqli_num_rows($resultTag)>0){
-                    echo '<p> <span class="name">' . '<b>Genres:</b> </span>';
-                    $x = 0;
+                    $count = 0;
                     while($rowTag = mysqli_fetch_assoc($resultTag)){
                         echo $rowTag['tag_name'];
-                        $x++;
-                        if($x != mysqli_num_rows($resultTag)){
+                        $count++;
+                        if($count != mysqli_num_rows($resultTag)){
                             echo ', ';
                         }
                     }
@@ -229,54 +229,29 @@ session_start();
                 }
                 $sqlLanguage = "SELECT * FROM content_language WHERE content_language.content_id = '$singleContent'";
                 $resultLanguage = mysqli_query($conn,$sqlLanguage);
+                echo '<p> <span class="name">' . '<b>Language: </b></span>';
                 if(mysqli_num_rows($resultLanguage)>0){
-                    echo '<p> <span class="name">' . '<b>Language: </b></span>';
-                    $x = 0;
+                    $count = 0;
                     while($rowLanguage = mysqli_fetch_assoc($resultLanguage)){
                         echo $rowLanguage['content_language'];
-                        $x++;
-                        if($x != mysqli_num_rows($resultLanguage)){
+                        $count++;
+                        if($count != mysqli_num_rows($resultLanguage)){
                             echo ', ';
                         }
                     }
                     echo '</p>';
                 }
+
                 
             ?>
-            <!-- <div class="castinformation">
-                <p><span class="name">Actors:</span> Adam Sandler, James Vanderbilt, Allen Covert, James D. Stern,
-                    Tripp Vinson, A.J. Dix</p>
-                <p><span class="name">Genres:</span> Aksion, Gizemli</p>
-                <p><span class="name">Language:</span> Aksion, Gizemli</p>
-            </div> -->
-            <!-- <div class="movierelease">
-                <span class="year">
-                    2019
-                </span>
-                <span class="rating">
-                    PG-13
-                </span>
-                <span class="timeduration">
-                    3h 7m
-                </span>
-            </div>
-            <div class="description">
-                A New York cop and his wife go on a European vacation to reinvigorate the spark in their marriage. A
-                chance encounter leads to them being framed for the murder of an elderly billionaire.
-            </div>
-            <div class="castinformation">
-                <p><span class="name">Actors:</span> Adam Sandler, James Vanderbilt, Allen Covert, James D. Stern,
-                    Tripp Vinson, A.J. Dix</p>
-                <p><span class="name">Genres:</span> Aksion, Gizemli</p>
-                <p><span class="name">Language:</span> Aksion, Gizemli</p>
-            </div> -->
-
-            <div class="actions d-flex flex-start flex-middle">
-                <a href="/" class="link-item">
-                    <i class="fa fa-plus"></i></br>
-                    Wish List
-                </a>
-            </div>
+             <div class="actions d-flex flex-start flex-middle">
+               <?php 
+               echo '<a href="wishProcess.php?id='.$_GET['id'].'&user='.$_SESSION['user_id'].'" class="link-item">'.
+                     '<i class="fa fa-plus"></i></br>' . 
+                     "Wish List" . 
+                '</a>';
+                ?>
+                </div>
         </section>
 
         <!--Hollywood Action movies-->

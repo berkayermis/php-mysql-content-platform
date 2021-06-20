@@ -86,9 +86,24 @@ session_start();
                     My List
                 </h4>
                 <div class="my-list-page-container d-flex flex-start flex-middle">
-                    <a href="single.php">
-                        <img src="../images/movies/horrible-bosses-middle-poster.webp" alt=""
-                            class="mylist-img p-r-10 p-t-10 image-size item"></a>
+                <?php 
+                    require_once('../config.php');
+                    $conn = mysqli_connect($server, $username, $password,$database);
+                    
+                    // Check connection
+                    if (!$conn) {
+                        die("Connection failed: " . mysqli_connect_error());
+                    }
+                    $usr = $_SESSION['user_id'];
+                    $sql = "SELECT * FROM content,wishlist WHERE content.id=wishlist.content_id AND wishlist.user_id ='$usr'";
+                    $result = mysqli_query($conn,$sql);
+                    if(mysqli_num_rows($result)>0){
+                        while($row = mysqli_fetch_assoc($result)){
+                            echo  '<a href="single.php?id='.$row['content_id'].'&name='.$row['content_name'].'">' . 
+                            '<img src="https://img.youtube.com/vi/'.$row['source'].'/0.jpg" alt="" class="mylist-img p-r-10 p-t-10 image-size item">' . '</a>'; 
+                        }
+                    }
+                   ?>
                 </div>
             </section>
 
