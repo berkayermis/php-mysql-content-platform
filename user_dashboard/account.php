@@ -138,8 +138,33 @@ session_start();
 
                     <div class="carddetail d-flex space-between flex-middle">
                         <div class="card">
-                            <h4><span class="icon-visa">VISA</span> •••• •••• •••• 5350</h4>
-                        </div>
+                                <h4><span class="icon-visa">VISA</span> •••• •••• •••• 
+                                <?php 
+                                require_once('../config.php');
+
+                                // Create connection
+                                $conn = mysqli_connect($server, $username, $password, $database);
+                                
+                                // Check connection
+                                if (!$conn) {
+                                die("Connection failed: " . mysqli_connect_error());
+                                }
+                                
+                                $x = $_SESSION['user_id'];
+
+                                $sql = "SELECT * FROM credit_card,user WHERE credit_card.current_user_id = user.id AND 
+                                
+                                user.id = '$x'";
+                                
+                                $result = mysqli_query($conn,$sql);
+                                if(mysqli_num_rows($result)>0){
+                                    $row = mysqli_fetch_assoc($result);
+                                    $cardNo = substr($row['card_no'],8,4);
+                                    echo $cardNo;
+                                }
+                                ?>
+                                </h4>
+                            </div>
                         <div class="link">
                             <a href="user.php" class="link-item">
                                 Update payment info

@@ -7,7 +7,7 @@ session_start();
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Series-Movies Suggestion System</title>
+    <title>Register | Forty-Two</title>
     <meta name="description" content="Series-Movies Suggestion System" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="assets/css/global.css">
@@ -30,7 +30,6 @@ session_start();
         </header>
         <section id="login-form-section">
             <!--Login form start-->
-
                 <div class="loginContainer d-flex direction-column">
                     <h2 class="formtitle">
                         Register Account
@@ -42,6 +41,7 @@ session_start();
                         <input type="number" name="phone" id="phone" class="phone" placeholder="Phone Number" required/> 
                         <input type="password" name="password" id="password" placeholder="Password" required/>
                         <p id="errorPassword">Your password must contain between 4 and 60 characters.</p>
+<<<<<<< HEAD
                         <h2 class="formtitle">
                         Payment Informations
                     </h2>
@@ -56,6 +56,17 @@ session_start();
                         <p class="signUpText para">
                             Have an account? <span class="signUp"><a href="login.php">Sign In</a></span>
                         </p>
+=======
+                        
+                        <h2 class="formtitle">Payment Method</h2>
+                        <input type="text" name="cardNo" id="cardNo" class="cardNo" placeholder="Card Number" required/>
+                        <input type="text" name="cardDate" id="cardDate" class="cardDate" placeholder="Expiration Date (MM/YY)" required/>
+                        <input type="text" name="cardCVV" id="cardCVV" class="cardCVV" placeholder="Security Code (CVV)" required/>
+                        <input type="text" name="cardHN" id="cardHN" placeholder="Cardholder Name" required/>
+                    
+                        <button type="submit" name="submit" class="button submitButton" id="signInButton">Register</button>
+                        <p class="signUpText para">Have an account? <span class="signUp"><a href="login.php">Sign In</a></span></p>
+>>>>>>> 1297d3f98b98c7f8c090e11acf1a7596194cba48
                     </form>
                 </div>
         </section>
@@ -72,7 +83,6 @@ session_start();
             if (result) {
                 document.getElementById('errorEmail').style.display = "none";
                 document.getElementById('signInButton').disabled = false;
-               // document.getElementById("email-form").submit();
             }
             else {
                 document.getElementById('errorEmail').style.display = "block";
@@ -104,6 +114,8 @@ session_start();
             $cardCVV = $_POST['cardCVV'];
             $cardHN = $_POST['cardHN'];
 
+            $_SESSION['lastFourDigitOfCardNumber'] = substr( $cardNo, 8, 4);
+
             $active = 1;
             $query = "INSERT INTO user (email,username,user_pass,phone,is_active) VALUES (?,?,?,?,?)";
             $statement = mysqli_prepare($conn,$query);
@@ -122,9 +134,10 @@ session_start();
                 mysqli_stmt_execute($statement);
                 print(mysqli_stmt_error($statement) . "\n");
                 mysqli_stmt_close($statement);
-
+                
         }
         mysqli_close($conn);
+        header("Location: login.php");
 
     }
         ?>

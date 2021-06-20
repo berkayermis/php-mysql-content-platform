@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Series-Movies Suggestion System</title>
+    <title>Sıgn In | Forty-Two</title>
     <meta name="description" content="Series-Movies Suggestion System" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="assets/css/global.css">
