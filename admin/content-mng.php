@@ -34,7 +34,7 @@
                     <h2 class="formtitle">
                     Content Management
                     </h2>
-                    <form action="tag.php" id="loginForm" class="d-flex direction-column" method="post" name="episodeForm">
+                    <form action="content-mng.php" id="loginForm" class="d-flex direction-column" method="post" name="episodeForm">
                         <select style="height:50px; background: #333; border:none; color: white;" name="contentList">
                            <?php
                                    require_once('../config.php');

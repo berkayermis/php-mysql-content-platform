@@ -49,7 +49,7 @@ session_start();
                         <input type="text" name="cardDate" id="cardDate" class="cardDate" placeholder="mm/yyyy" required/>
                         <input type="text" name="cardCVV" id="cardCVV" class="cardCVV" placeholder="CVV" required/>
                         <input type="text" name="cardHN" id="cardHN" placeholder="Card Holder Name" required/>
-
+        
                         <button type="submit" name="submit" class="button submitButton" id="signInButton">
                             Register
                         </button>
