@@ -7,7 +7,7 @@ session_start();
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Update User Settings</title>
+    <title>Update User Settings | Forty-Two</title>
     <meta name="description" content="Series-Movies Suggestion System" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../assets/css/global.css">
@@ -34,7 +34,6 @@ session_start();
                     <h2 class="formtitle">Change E-Mail</h2>
                     <form action="user.php" id="loginForm" class="d-flex direction-column" method="post" name="loginForm">
                         <input type="email" name="newEmail" id="newEmail" class="newEmail" placeholder="New E-Mail Adress" required/>
-                        <!-- <input type="email" name="newEmail" id="newEmail" class="newEmail" placeholder="Confirm New E-Mail Adress" required/> -->
                         <button type="submit" name="updateMail" class="button submitButton" id="updateMailButton">Update</button>
                     </form>
                 </div>
@@ -54,7 +53,6 @@ session_start();
                         }
 
                         if(isset($_POST['updateMail'])){
-                            // $_SESSION['email'] = $row['email'];
                             $newMail = $_POST['newEmail'];
 
                             $update_sql = 'UPDATE user SET email = "'. $newMail . '" WHERE email = "'.$_SESSION['email'].'" ';
@@ -81,7 +79,6 @@ session_start();
                     <h2 class="formtitle">Change Password</h2>
                     <form action="user.php" id="loginForm" class="d-flex direction-column" method="post" name="loginForm">
                         <input type="password" name="newPassword" id="newPassword" class="newPassword" placeholder="New Password" required/>
-                        <!-- <input type="password" name="newPassword" id="newPassword" class="newPassword" placeholder="Confirm New Password" required/> -->
                         <button type="submit" name="updatePassword" class="button submitButton" id="updatePassword">Update</button>
                     </form>
                 </div>
@@ -100,7 +97,6 @@ session_start();
                         }
 
                         if(isset($_POST['updatePassword'])){
-                            // $_SESSION['email'] = $row['email'];
                             $newPW = $_POST['newPassword'];
 
                             $update_sql = 'UPDATE user SET user_pass = "'. $newPW . '" WHERE email = "'.$_SESSION['email'].'"';
@@ -130,13 +126,12 @@ session_start();
                 <div class="loginContainer d-flex direction-column">
                     <h2 class="formtitle">Change Number</h2>
                     <form action="user.php" id="loginForm" class="d-flex direction-column" method="post" name="loginForm">
-                        <input type="tel" name="newPhone" id="newPhone" class="newPhone" placeholder="New Phone Number" required/>
-                        <!-- <input type="tel" name="newPhone" id="newPhone" class="newPhone" placeholder="Confirm New Phone Number" required/>  -->
+                        <input type="number" name="newPhone" id="newPhone" class="newPhone" placeholder="New Phone Number" required/>
                         <button type="submit" name="updateNumber" class="button submitButton" id="signInButton">Update</button>
                     </form>
                 </div>
+            <!--Update Phone Number form End-->
 
-            <!--Update Phone Number form start-->
         </section>
 
         <?php
@@ -151,17 +146,63 @@ session_start();
                         }
 
                         if(isset($_POST['updateNumber'])){
-                            // $_SESSION['email'] = $row['email'];
                             $newPhone = $_POST['newPhone'];
 
                             $update_sql = 'UPDATE user SET phone = "'. $newPhone . '" WHERE email = "'.$_SESSION['email'].'"';
                             
-
-
                             if (mysqli_query($conn, $update_sql)) {
                                 echo "Record updated successfully";
                                 $_SESSION['phone'] = $newPhone;
                                 header("Location: account.php");
+                              } else {
+                                echo "Error updating record: " . mysqli_error($conn);
+                              }
+                        }    
+            
+                    ?>
+
+        <section id="update-payment-section">
+            <!--Update Payment Method form start-->
+
+                <div class="loginContainer d-flex direction-column">
+                    <h2 class="formtitle">Update Payment Informations</h2>
+                    <form action="user.php" id="loginForm" class="d-flex direction-column" method="post" name="loginForm">
+                        <input type="text" name="cardNo" id="cardNo" class="cardNo" placeholder="Card Number" required/>
+                        <input type="text" name="cardDate" id="cardDate" class="cardDate" placeholder="Expiration Date (MM/YY)" required/>
+                        <input type="text" name="cardCVV" id="cardCVV" class="cardCVV" placeholder="Security Code (CVV)" required/>
+                        <input type="text" name="cardHN" id="cardHN" placeholder="Cardholder Name" required/>
+                        <button type="submit" name="updateCard" class="button submitButton" id="signInButton" onclick="account.php">Update</button>
+                    </form>
+                </div>
+
+            <!--Update Payment Method form start-->
+        </section>
+
+        <?php
+                        require_once('../config.php');
+
+                        // Create connection
+                        $conn = mysqli_connect($server, $username, $password,$database);
+                        
+                        // Check connection
+                        if (!$conn) {
+                            die("Connection failed: " . mysqli_connect_error());
+                        }
+
+                        if(isset($_POST['updateCard'])){
+                            $cardNo = $_POST['cardNo'];
+                            $cardDate = $_POST['cardDate'];
+                            $cardCVV = $_POST['cardCVV'];
+                            $cardHN = $_POST['cardHN'];
+
+                            $update_sql = 'UPDATE credit_card SET card_no = "' . $cardNo . '", card_date = "'. $cardDate .'", 
+                                                    cvv = "'.$cardCVV.'", 
+                                                    card_holder_name = "'. $cardHN . '"
+                                                    WHERE current_user_id = "' .$_SESSION['user_id'].'"';
+                            
+
+                            if (mysqli_query($conn, $update_sql)) {
+                                echo "Record updated successfully";
                               } else {
                                 echo "Error updating record: " . mysqli_error($conn);
                               }
