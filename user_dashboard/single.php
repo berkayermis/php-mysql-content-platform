@@ -246,8 +246,12 @@ session_start();
             ?>
              <div class="actions d-flex flex-start flex-middle">
                <?php 
-               echo '<a href="wishProcess.php?id='.$_GET['id'].'&user='.$_SESSION['user_id'].'" class="link-item">'.
+               echo '<a href="wishProcess.php?id='.$_GET['id'].'&user='.$_SESSION['user_id'].'&key=1" class="link-item">'.
                      '<i class="fa fa-plus"></i></br>' . 
+                     "Wish List" . 
+                '</a>';
+                echo '<a href="wishProcess.php?id='.$_GET['id'].'&user='.$_SESSION['user_id'].'&key=2" class="link-item">'.
+                     '<i class="fa fa-minus"></i></br>' . 
                      "Wish List" . 
                 '</a>';
                 ?>

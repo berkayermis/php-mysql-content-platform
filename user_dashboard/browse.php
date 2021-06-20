@@ -169,7 +169,7 @@ session_start();
                                         '</button>' . 
                                     '</div>' . 
                                     '<div>' . 
-                                    '<h4 class="heading f-w-8 text-shadow">' . 
+                                    '<h4 style="font-size:14px; margin-bottom:15px;" class="heading f-w-8 text-shadow">' . 
                                     $row['content_name'] . 
                                     '</h4>' . 
                                     '</div>' . 
