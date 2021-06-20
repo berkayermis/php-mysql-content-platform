@@ -181,261 +181,147 @@ session_start();
                 </div>
                 </section>
 
-                <!--continue watching-->
-                <!-- <section id="continue-watching" class="container p-t-40">
-                    <h4 class="continue-watching-heading">
-                        Continue watching for Rajesh Royal
+                <!--Movies-->
+                <section id="romantic" class="container p-t-40">
+                    <h4 class="romantic-heading">
+                        Movies
                     </h4>
-                    <div class="continue-watching-container d-flex flex-start flex-middle flex-no-wrap owl-carousel">
+                    <div class="mylist-container d-flex flex-start flex-middle flex-no-wrap owl-carousel">
 
-                                <div class="video">
-                                    <video class="mylist-img p-r-10 p-t-10 video-item"
-                                        poster="../images/movies/horrible-bosses-middle-poster.webp">
-                                        <source
-                                            src="../images/tv-show/videos/Never Have I Ever - Official Trailer - Netflix_2.mp4"
-                                            type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-        
-                                    <div class="video-description d-flex flex-end direction-column">
-                                        <div class="play-button">
-                                            <svg viewBox="0 0 24 24">
-                                                <path d="M6 4l15 8-15 8z" fill="black"></path>
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <h4 class="heading f-w-8 text-shadow">
-                                                Horrible Bosses
-                                            </h4>
-                                        </div>
-                                        <div class="info d-flex flex-middle flex-no-wrap">
-                                            <p class="rated text-shadow"><strong>18+</strong></p>
-                                            <p class="season-count text-shadow">Movie</p>
-                                        </div>
-                                        <div class="genere d-flex flex-no-wrap text-shadow">
-                                            <p>#Nudeity</p>
-                                            <p>#sex</p>
-                                            <p>#Comedy</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                
+                    <?php
+                        require_once('../config.php');
+
+                        // Create connection
+                        $conn = mysqli_connect($server, $username, $password,$database);
                         
-                                <div class="video">
-                                    <video class="mylist-img p-r-10 p-t-10 video-item"
-                                        poster="../images/movies/kabir-singh-poster.webp">
-                                        <source
-                                            src="../images/tv-show/videos/Never Have I Ever - Official Trailer - Netflix_2.mp4"
-                                            type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-        
-                                    <div class="video-description d-flex flex-end direction-column">
-                                        <div class="play-button">
-                                            <svg viewBox="0 0 24 24">
-                                                <path d="M6 4l15 8-15 8z" fill="black"></path>
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <h4 class="heading f-w-8 text-shadow">
-                                                Kabir Singh
-                                            </h4>
-                                        </div>
-                                        <div class="info d-flex flex-middle flex-no-wrap">
-                                            <p class="rated text-shadow"><strong>18+</strong></p>
-                                            <p class="season-count text-shadow">Movie</p>
-                                        </div>
-                                        <div class="genere d-flex flex-no-wrap text-shadow">
-                                            <p>#Nudeity</p>
-                                            <p>#crime</p>
-                                            <p>#Love</p>
-                                        </div>
-                                    </div>
-                                </div>
+                        // Check connection
+                        if (!$conn) {
+                            die("Connection failed: " . mysqli_connect_error());
+                        }
 
-                                <div class="video">
-                                    <video class="mylist-img p-r-10 p-t-10 video-item"
-                                        poster="../images/tv-show/poster/never-have-ever-short poster.jpg">
-                                        <source
-                                            src="../images/tv-show/videos/Never Have I Ever - Official Trailer - Netflix_2.mp4"
-                                            type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-        
-                                    <div class="video-description d-flex flex-end direction-column">
-                                        <div class="play-button">
-                                            <svg viewBox="0 0 24 24">
-                                                <path d="M6 4l15 8-15 8z" fill="black"></path>
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <h4 class="heading f-w-8 text-shadow">
-                                                Never Have I Ever
-                                            </h4>
-                                        </div>
-                                        <div class="info d-flex flex-middle flex-no-wrap">
-                                            <p class="rated text-shadow"><strong>18+</strong></p>
-                                            <p class="season-count text-shadow"> 1 Season</p>
-                                        </div>
-                                        <div class="genere d-flex flex-no-wrap text-shadow">
-                                            <p>#Nudeity</p>
-                                            <p>#Romance</p>
-                                            <p>#Love</p>
-                                        </div>
-                                    </div>
-                                </div>
-        
-                                <div class="video">
-                                    <video class="mylist-img p-r-10 p-t-10 video-item"
-                                        poster="../images/movies/we-are-the-milers-poster-little.webp">
-                                        <source
-                                            src="../images/movies/videos/We're the Millers - Official Trailer [HD].mp4"
-                                            type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-        
-                                    <div class="video-description d-flex flex-end direction-column">
-                                        <div class="play-button">
-                                            <svg viewBox="0 0 24 24">
-                                                <path d="M6 4l15 8-15 8z" fill="black"></path>
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <h4 class="heading f-w-8 text-shadow">
-                                                WE'RE THE MILERS
-                                            </h4>
-                                        </div>
-                                        <div class="info d-flex flex-middle flex-no-wrap">
-                                            <p class="rated text-shadow"><strong>18+</strong></p>
-                                            <p class="season-count text-shadow">Movie</p>
-                                        </div>
-                                        <div class="genere d-flex flex-no-wrap text-shadow">
-                                            <p>#Nudeity</p>
-                                            <p>#fiction</p>
-                                            <p>#Comedy</p>
-                                        </div>
-                                    </div>
-                                </div>
-        
-                                <div class="video">
-                                    <video class="mylist-img p-r-10 p-t-10 video-item"
-                                        poster="../images/movies/extraction-poster.jpg">
-                                        <source
-                                            src="../images/movies/videos/Murder Mystery - Trailer - Netflix.mp4"
-                                            type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-        
-                                    <div class="video-description d-flex flex-end direction-column">
-                                        <div class="play-button">
-                                            <svg viewBox="0 0 24 24">
-                                                <path d="M6 4l15 8-15 8z" fill="black"></path>
-                                            </svg>
-                                        </div>
-                                        <div>
-                                            <h4 class="heading f-w-8 text-shadow">
-                                                Extraction
-                                            </h4>
-                                        </div>
-                                        <div class="info d-flex flex-middle flex-no-wrap">
-                                            <p class="rated text-shadow"><strong>18+</strong></p>
-                                            <p class="season-count text-shadow">Movie</p>
-                                        </div>
-                                        <div class="genere d-flex flex-no-wrap text-shadow">
-                                            <p>#Adrenalin</p>
-                                            <p>#Wild</p>
-                                            <p>#Action</p>
-                                        </div>
-                                    </div>
-                                </div>
-
+                        $sql = 'SELECT * FROM content,movie WHERE content.id = movie.content_id';
+                        $result = mysqli_query($conn,$sql);
+                        if(mysqli_num_rows($result)>0){
+                            while($row = mysqli_fetch_assoc($result)){
+                                $x = $row['source'];
+                                echo '<div class="video">' .
+                                '<div class="mylist-img p-r-10 p-t-10 video-item">' . 
+                                '<img src="https://img.youtube.com/vi/'.$row['source'].'/0.jpg">'. 
+                                '</div>' . 
+                                '<div class="video-description d-flex flex-end direction-column">' . 
+                                    '<div>' . 
+                                        '<button style="background-color:red; border:none;
+                                        text-align: center; padding:10px;">' . 
+                                        '<a href="single.php?id='.$row['id'].'&name='.$row['content_name'].'" style="color:white;">' . "<strong>Play</strong>" . '</a>' . 
+                                        '</button>' . 
+                                    '</div>' . 
+                                    '<div>' . 
+                                    '<h4 style="font-size:14px; margin-bottom:15px;" class="heading f-w-8 text-shadow">' . 
+                                    $row['content_name'] . 
+                                    '</h4>' . 
+                                    '</div>' . 
+                                '</div>' . 
+                            "</div>";
+                            }
+                        }
+                    ?>
                     </div>
-                </section> -->
+                </section>
 
-                <!--Romantic Movies-->
-                <!-- <section id="romantic" class="container p-t-40">
+                <!--Serials-->
+                <section id="romantic" class="container p-t-40">
                     <h4 class="romantic-heading">
-                        Romantic Movies
+                        Serials
                     </h4>
-                    <div class="romantic-container d-flex flex-start flex-middle flex-no-wrap owl-carousel">
-                        <a href="#">
-                            <img src="../images/movies/horrible-bosses-middle-poster.webp" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                        <a href="#">
-                            <img src="../images/movies/kabir-singh-poster.webp" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                        <a href="#">
-                            <img src="../images/movies/extraction-poster.jpg" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                        <a href="#">
-                            <img src="../images/tv-show/poster/never-have-ever-short poster.jpg" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                        <a href="#">
-                            <img src="../images/movies/we-are-the-milers-poster-little.webp" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
+                    <div class="mylist-container d-flex flex-start flex-middle flex-no-wrap owl-carousel">
 
-                        <a href="#">
-                            <img src="../images/movies/we-are-the-milers-poster-little.webp" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
+                    <?php
+                        require_once('../config.php');
 
+                        // Create connection
+                        $conn = mysqli_connect($server, $username, $password,$database);
+                        
+                        // Check connection
+                        if (!$conn) {
+                            die("Connection failed: " . mysqli_connect_error());
+                        }
+
+                        $sql = 'SELECT * FROM content,serie WHERE content.id = serie.content_id';
+                        $result = mysqli_query($conn,$sql);
+                        if(mysqli_num_rows($result)>0){
+                            while($row = mysqli_fetch_assoc($result)){
+                                $x = $row['source'];
+                                echo '<div class="video">' .
+                                '<div class="mylist-img p-r-10 p-t-10 video-item">' . 
+                                '<img src="https://img.youtube.com/vi/'.$row['source'].'/0.jpg">'. 
+                                '</div>' . 
+                                '<div class="video-description d-flex flex-end direction-column">' . 
+                                    '<div>' . 
+                                        '<button style="background-color:red; border:none;
+                                        text-align: center; padding:10px;">' . 
+                                        '<a href="single.php?id='.$row['id'].'&name='.$row['content_name'].'" style="color:white;">' . "<strong>Play</strong>" . '</a>' . 
+                                        '</button>' . 
+                                    '</div>' . 
+                                    '<div>' . 
+                                    '<h4 style="font-size:14px; margin-bottom:15px;" class="heading f-w-8 text-shadow">' . 
+                                    $row['content_name'] . 
+                                    '</h4>' . 
+                                    '</div>' . 
+                                '</div>' . 
+                            "</div>";
+                            }
+                        }
+                    ?>
                     </div>
-                </section> -->
+                </section>
 
-                <!--Get In On the Action-->
-                <!-- <section id="romantic" class="container p-t-40">
+                    <!--Documentaries-->
+                    <section id="romantic" class="container p-t-40">
                     <h4 class="romantic-heading">
-                        Get In On the Action
+                        Documentaries
                     </h4>
-                    <div class="romantic-container d-flex flex-start flex-middle flex-no-wrap owl-carousel">
-                        <a href="#">
-                            <img src="../images/movies/horrible-bosses-middle-poster.webp" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                        <a href="#">
-                            <img src="../images/movies/kabir-singh-poster.webp" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                        <a href="#">
-                            <img src="../images/movies/extraction-poster.jpg" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                        <a href="#">
-                            <img src="../images/tv-show/poster/never-have-ever-short poster.jpg" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                        <a href="#">
-                            <img src="../images/movies/we-are-the-milers-poster-little.webp" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
+                    <div class="mylist-container d-flex flex-start flex-middle flex-no-wrap owl-carousel">
 
-                        <a href="#">
-                            <img src="../images/movies/we-are-the-milers-poster-little.webp" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
+                    <?php
+                        require_once('../config.php');
 
+                        // Create connection
+                        $conn = mysqli_connect($server, $username, $password,$database);
+                        
+                        // Check connection
+                        if (!$conn) {
+                            die("Connection failed: " . mysqli_connect_error());
+                        }
+
+                        $sql = 'SELECT * FROM content,documentary WHERE content.id = documentary.content_id';
+                        $result = mysqli_query($conn,$sql);
+                        if(mysqli_num_rows($result)>0){
+                            while($row = mysqli_fetch_assoc($result)){
+                                $x = $row['source'];
+                                echo '<div class="video">' .
+                                '<div class="mylist-img p-r-10 p-t-10 video-item">' . 
+                                '<img src="https://img.youtube.com/vi/'.$row['source'].'/0.jpg">'. 
+                                '</div>' . 
+                                '<div class="video-description d-flex flex-end direction-column">' . 
+                                    '<div>' . 
+                                        '<button style="background-color:red; border:none;
+                                        text-align: center; padding:10px;">' . 
+                                        '<a href="single.php?id='.$row['id'].'&name='.$row['content_name'].'" style="color:white;">' . "<strong>Play</strong>" . '</a>' . 
+                                        '</button>' . 
+                                    '</div>' . 
+                                    '<div>' . 
+                                    '<h4 style="font-size:14px; margin-bottom:15px;" class="heading f-w-8 text-shadow">' . 
+                                    $row['content_name'] . 
+                                    '</h4>' . 
+                                    '</div>' . 
+                                '</div>' . 
+                            "</div>";
+                            }
+                        }
+                    ?>
                     </div>
-                </section> -->
+                </section>
 
-                <!--Bingeworthy TV Shows-->
-                <!-- <section id="romantic" class="container p-t-40">
-                    <h4 class="romantic-heading">
-                        Bingeworthy TV Shows
-                    </h4>
-                    <div class="romantic-container d-flex flex-start flex-middle flex-no-wrap owl-carousel">
-                        <a href="#">
-                            <img src="../images/movies/horrible-bosses-middle-poster.webp" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                        <a href="#">
-                            <img src="../images/movies/kabir-singh-poster.webp" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                        <a href="#">
-                            <img src="../images/movies/extraction-poster.jpg" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                        <a href="#">
-                            <img src="../images/tv-show/poster/never-have-ever-short poster.jpg" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
-                        <a href="#">
-                            <img src="../images/movies/we-are-the-milers-poster-little.webp" alt=""
-                                class="mylist-img p-r-10 p-t-10 image-size item"></a>
-
-
-
-                    </div>
-                </section> -->
             </div>
         </div>
 
