@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html class="no-js">
 <head>
@@ -38,6 +42,13 @@
                         <input type="number" name="phone" id="phone" class="phone" placeholder="Phone Number" required/> 
                         <input type="password" name="password" id="password" placeholder="Password" required/>
                         <p id="errorPassword">Your password must contain between 4 and 60 characters.</p>
+                        <h2 class="formtitle">
+                        Payment Informations
+                    </h2>
+                        <input type="text" name="cardNo" id="cardNo" class="cardNo" placeholder="Credit Card Number" required/>
+                        <input type="text" name="cardDate" id="cardDate" class="cardDate" placeholder="mm/yyyy" required/>
+                        <input type="text" name="cardCVV" id="cardCVV" class="cardCVV" placeholder="CVV" required/>
+                        <input type="text" name="cardHN" id="cardHN" placeholder="Card Holder Name" required/>
 
                         <button type="submit" name="submit" class="button submitButton" id="signInButton">
                             Register
@@ -71,38 +82,57 @@
     </script>
 </body>
 
+<?php 
+        require_once('config.php');
 
-<?php
+        // Create connection
+        $conn = mysqli_connect($server, $username, $password, $database);
+        
+        // Check connection
+        if (!$conn) {
+          die("Connection failed: " . mysqli_connect_error());
+        }
 
-require_once('config.php');
+        if(isset($_POST['submit'])){
+            $email_addr = $_POST['email'];
+            $user = $_POST['name'];
+            $pass = $_POST['password'];
+            $phoneNo = $_POST['phone'];
+            $_SESSION['reg_email'] = $email_addr;
+            $_SESSION['reg_pass'] = $pass;
 
-// Create connection
-$conn = mysqli_connect($server, $username, $password, $database);
+            $cardNo = $_POST['cardNo'];
+            $cardDate = $_POST['cardDate'];
+            $cardCVV = $_POST['cardCVV'];
+            $cardHN = $_POST['cardHN'];
+            $_SESSION['reg_cardNo'] = $cardNo;
+            $_SESSION['reg_cardDate'] = $cardDate;
+            $_SESSION['reg_cardCVV'] = $cardCVV;
+            $_SESSION['reg_cardHN'] = $cardHN;
 
-// Check connection
-if (!$conn) {
-  die("Connection failed: " . mysqli_connect_error());
-}
+            $active = 1;
+            $query = "INSERT INTO user (email,username,user_pass,phone,is_active) VALUES (?,?,?,?,?)";
+            $statement = mysqli_prepare($conn,$query);
+            mysqli_stmt_bind_param($statement,'sssii',$email_addr,$user,$pass,$phoneNo,$active);
+            mysqli_stmt_execute($statement);
+            print(mysqli_stmt_error($statement) . "\n");
+            mysqli_stmt_close($statement);
 
+            $search = "SELECT * FROM user WHERE email='$email_addr' AND user_pass='$pass'";
+            $result = mysqli_query($conn,$search);
+            if(mysqli_num_rows($result)>0){
+                $row = mysqli_fetch_assoc($result);
+                $query_card = "INSERT INTO credit_card (card_no,cvv,card_date,card_holder_name,current_user_id) VALUES (?,?,?,?,?)";
+                $statement = mysqli_prepare($conn,$query_card);
+                mysqli_stmt_bind_param($statement,'iiisi',$cardNo,$cardCVV,$cardDate,$cardHN,$row['id']);
+                mysqli_stmt_execute($statement);
+                print(mysqli_stmt_error($statement) . "\n");
+                mysqli_stmt_close($statement);
 
-if(isset($_POST['submit'])){
-    $email_addr = $_POST['email'];
-    $user = $_POST['name'];
-    $pass = $_POST['password'];
-    $phoneNo = $_POST['phone'];
+        }
+        mysqli_close($conn);
 
-    $query = "INSERT INTO user (email,username,user_pass,phone) VALUES (?,?,?,?)";
-	$statement = mysqli_prepare($conn,$query);
-	mysqli_stmt_bind_param($statement,'sssi',$email_addr,$user,$pass,$phoneNo);
-	mysqli_stmt_execute($statement);
-	print(mysqli_stmt_error($statement) . "\n");
-	mysqli_stmt_close($statement);
-
-    mysqli_close($conn);
-}
-
-
-
-?>
+    }
+        ?>
 
 </html>
