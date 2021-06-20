@@ -258,13 +258,33 @@ session_start();
                 </div>
         </section>
 
-        <!--Hollywood Action movies-->
+        <!--More Like This-->
         <section id="similar" class="container p-t-40">
             <h4 class="romantic-heading">
                 More Like This
             </h4>
-            <div class="romantic-container d-flex flex-start flex-middle">
-                <a href="#">
+            <div style=" " class="romantic-container d-flex flex-start flex-middle">
+                <?php 
+                    require_once('../config.php');
+                    $conn = mysqli_connect($server, $username, $password,$database);
+                    
+                    // Check connection
+                    if (!$conn) {
+                        die("Connection failed: " . mysqli_connect_error());
+                    }
+                    $usr = $_SESSION['user_id'];
+                    $dt = $_GET['id'];
+                    $sql = "SELECT * FROM content,content_tag WHERE content.id = content_tag.content_id AND
+                    tag_name IN (SELECT tag_name FROM content_tag WHERE content_id='$dt') AND content_id <> '$dt'";
+                    $result = mysqli_query($conn,$sql);
+                    if(mysqli_num_rows($result)>0){
+                        while($row = mysqli_fetch_assoc($result)){
+                            echo  '<a href="single.php?id='.$row['content_id'].'&name='.$row['content_name'].'">' . 
+                            '<img src="https://img.youtube.com/vi/'.$row['source'].'/0.jpg" alt="" class="mylist-img p-r-10 p-t-10 image-size item">' . '</a>'; 
+                        }
+                    }
+                   ?>
+                <!-- <a href="#">
                     <img src="../images/movies/horrible-bosses-middle-poster.webp" alt=""
                         class="mylist-img p-r-10 p-t-10 image-size item"></a>
                 <a href="#">
@@ -278,7 +298,7 @@ session_start();
                         class="mylist-img p-r-10 p-t-10 image-size item"></a>
                 <a href="#">
                     <img src="../images/movies/we-are-the-milers-poster-little.webp" alt=""
-                        class="mylist-img p-r-10 p-t-10 image-size item"></a>
+                        class="mylist-img p-r-10 p-t-10 image-size item"></a> -->
 
 
 
