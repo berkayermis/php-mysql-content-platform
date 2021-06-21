@@ -121,6 +121,7 @@ session_start();
                                         echo '<div style="display:flex; flex-wrap:wrap;">';
                                         echo "Season ".$row3['season_no'] . "<br>";
                                         echo '</div>';
+                                        $b++;
                                     }
                                     echo '<iframe style="margin-right:5px;"  width="30%" height="200" 
                                     src="https://www.youtube.com/embed/'.$row3['source'].'/?controls=1"></iframe>';

@@ -135,12 +135,11 @@ session_start();
 
                 <!--my list -->
                 <section id="mylist" class="container">
-
-                    <h4 class="mylist-heading">
+                <h4 class="mylist-heading">
                     Recommended For You
                     </h4>
                 <div class="mylist-container d-flex flex-start flex-middle flex-no-wrap owl-carousel">
-
+                    
                     <?php
                         require_once('../config.php');
 

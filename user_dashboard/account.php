@@ -153,7 +153,6 @@ session_start();
                                 $x = $_SESSION['user_id'];
 
                                 $sql = "SELECT * FROM credit_card,user WHERE credit_card.current_user_id = user.id AND 
-                                
                                 user.id = '$x'";
                                 
                                 $result = mysqli_query($conn,$sql);
@@ -244,7 +243,7 @@ session_start();
 const buttonCancel = document.querySelector('#cancelMembership');
 
 function submitBeforeFunction(e){
-    return confirm("are you sure for cancel your membership?");
+    return confirm("Are you sure you want to cancel the membership?");
 }
 
 </script>

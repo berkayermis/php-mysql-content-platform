@@ -19,7 +19,7 @@
 
     <main style="padding: 0px 10px;">
         <header class="d-flex space-between middle-align">
-           <a href="admin.php">
+           <a href="login.php">
             <img src="../images/42.png" height="50px" width="170px" alt="site logo main" style="margin: auto;"></img>
         </a> 
         </header>
@@ -75,7 +75,7 @@ if(isset($_POST['login'])){
 	$admin_pass = $_POST['password'];
         if($admin_username == 'admin' && $admin_pass == '123456'){
             $_SESSION['admin_username'] = $admin_username;
-            header('Location: dashboard.php');
+            header('Location: admin.php');
             exit;
         }
         else{

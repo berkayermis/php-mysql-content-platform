@@ -144,14 +144,6 @@ function durationFetch($source){
                             $episodeDescription = $_POST['episodeDesc'];
                             $episodeSource = $_POST['episodeSource'];
                             $episodeOfSeason = $_POST['seasonNo'];
-                            // if($episodeOfSeason>1){
-                            //     $sql = 'INSERT INTO seasonal_content (content_id,season_no) VALUES (?,?)';
-                            //     $statement = mysqli_prepare($conn,$sql);
-                            //     mysqli_stmt_bind_param($statement,'ii',$contentOption,$episodeOfSeason);
-                            //     mysqli_stmt_execute($statement);
-                            //     print(mysqli_stmt_error($statement) . "\n");
-                            //     mysqli_stmt_close($statement);
-                            // }
                             if($episodeOfSeason>1){
                                 $search_sql = "UPDATE seasonal_content SET season_no=$episodeOfSeason
                                 WHERE seasonal_content.content_id=$contentOption";
@@ -160,14 +152,6 @@ function durationFetch($source){
                                   } else {
                                     echo "Error updating record: " . mysqli_error($conn);
                                   }
-                                // $res = mysqli_query($conn,$search_sql);
-                                // if(mysqli_num_rows($res)<1){
-                                //     $sql = 'INSERT INTO seasonal_content (content_id,season_no) VALUES (?,?)';
-                                //     $statement = mysqli_prepare($conn,$sql);
-                                //     mysqli_stmt_bind_param($statement,'ii',$contentOption,$episodeOfSeason);
-                                //     mysqli_stmt_execute($statement);
-                                //     print(mysqli_stmt_error($statement) . "\n");
-                                //     mysqli_stmt_close($statement);
                             }
 
                             

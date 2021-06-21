@@ -45,7 +45,7 @@ session_start();
                         Payment Informations
                     </h2>
                         <input type="text" name="cardNo" id="cardNo" class="cardNo" placeholder="Credit Card Number" required/>
-                        <input type="text" name="cardDate" id="cardDate" class="cardDate" placeholder="mm/yyyy" required/>
+                        <input type="text" name="cardDate" id="cardDate" class="cardDate" placeholder="mm/yy" required/>
                         <input type="text" name="cardCVV" id="cardCVV" class="cardCVV" placeholder="CVV" required/>
                         <input type="text" name="cardHN" id="cardHN" placeholder="Card Holder Name" required/>
         
